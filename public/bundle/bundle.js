@@ -55,7 +55,9 @@
 	var React = __webpack_require__(10);
 	var ReactDOM = __webpack_require__(167);
 	var ReactRouter = __webpack_require__(168);
-	var comp = __webpack_require__(231);
+	var comp = __webpack_require__(233);
+	var rootComp = __webpack_require__(234);
+	var ilComp = __webpack_require__(235);
 	var Router = ReactRouter.Router;
 	var Route = ReactRouter.Route;
 	var IndexRoute = ReactRouter.IndexRoute;
@@ -68,12 +70,13 @@
 	  null,
 	  React.createElement(
 	    Route,
-	    { path: '/', component: comp.AppComp },
+	    { path: '/', component: rootComp.RootComp },
 	    React.createElement(IndexRoute, { component: comp.HomeComp }),
-	    React.createElement(Route, { path: 'items', component: comp.TechnologiesComp }),
-	    React.createElement(Route, { path: 'addItems', component: comp.AddDataComp }),
+	    React.createElement(Route, { path: 'items', component: ilComp.ItemListComp }),
+	    React.createElement(Route, { path: 'addItems', component: comp.AddItemComp }),
 	    React.createElement(Route, { path: 'contact', component: comp.ContactComp }),
-	    React.createElement(Route, { path: 'editItem', component: comp.EditItemComp })
+	    React.createElement(Route, { path: 'editItem/:itemID', component: comp.EditItemComp }),
+	    React.createElement(Route, { path: 'deleteItem/:itemID', component: comp.DeleteItemComp })
 	  )
 	), document.getElementById('mount-point'));
 
@@ -25802,367 +25805,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 231 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(10);
-	var ReactDOM = __webpack_require__(167);
-	var ReactRouter = __webpack_require__(168);
-	var $ = __webpack_require__(232);
-
-	var Router = ReactRouter.Router;
-	var Route = ReactRouter.Route;
-	var IndexRoute = ReactRouter.IndexRoute;
-	var IndexLink = ReactRouter.IndexLink;
-	var Link = ReactRouter.Link;
-
-
-	var REST_API_URL = "/api/tech";
-
-	/****************************  AppComp  ******************************/
-	module.exports.AppComp = React.createClass({
-	  displayName: 'AppComp',
-
-	  getInitialState: function getInitialState() {
-	    console.log("executing AppComp:getInitialState");
-	    return { data: [] };
-	  },
-
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
-	      React.createElement(
-	        'h1',
-	        null,
-	        ' Grocery Farm'
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'navbar-collapse collapse' },
-	        React.createElement(
-	          'ul',
-	          { className: 'nav navbar-nav' },
-	          '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              IndexLink,
-	              { to: '/' },
-	              'Home'
-	            )
-	          ),
-	          '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              Link,
-	              { to: '/items' },
-	              'Items'
-	            )
-	          ),
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              Link,
-	              { to: '/addItems' },
-	              'Add Items'
-	            )
-	          ),
-	          '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              Link,
-	              { to: '/contact' },
-	              'Contact Us'
-	            )
-	          )
-	        )
-	      ),
-	      '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
-	      this.props.children,
-	      '\xA0\xA0\xA0\xA0\xA0\xA0'
-	    );
-	  }
-	});
-
-	/****************************  HomeComp  ******************************/
-	module.exports.HomeComp = React.createClass({
-	  displayName: 'HomeComp',
-
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'h3',
-	        null,
-	        'Welcome'
-	      ),
-	      React.createElement(
-	        'p',
-	        null,
-	        'We are your online grocery store'
-	      )
-	    );
-	  }
-	});
-
-	/****************************  ContactComp  ******************************/
-	module.exports.ContactComp = React.createClass({
-	  displayName: 'ContactComp',
-
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'h3',
-	        null,
-	        'Contact'
-	      ),
-	      React.createElement(
-	        'p',
-	        null,
-	        'Web World, Bhugaon, Pune'
-	      )
-	    );
-	  }
-	});
-
-	/****************************  TechnologiesComp  ******************************/
-	module.exports.TechnologiesComp = React.createClass({
-	  displayName: 'TechnologiesComp',
-
-	  loadDataFromServer: function loadDataFromServer() {
-	    $.ajax({
-	      url: REST_API_URL,
-	      dataType: 'json',
-	      type: 'GET',
-	      cache: false,
-	      success: function (data) {
-	        this.setState({ serverData: data });
-	        console.log(JSON.stringify(data));
-	      }.bind(this),
-	      error: function (xhr, status, err) {
-	        console.error(this.props.url, status, err.toString());
-	      }.bind(this)
-	    });
-	  },
-	  componentDidMount: function componentDidMount() {
-	    console.log("executing TechnologiesComp:componentDidMount");
-	    this.loadDataFromServer();
-	  },
-	  getInitialState: function getInitialState() {
-	    return { serverData: [] };
-	  },
-
-	  render: function render() {
-	    var htmlElementArray = this.state.serverData.map(function (anObject) {
-	      return React.createElement(
-	        'tr',
-	        null,
-	        React.createElement(
-	          'td',
-	          null,
-	          anObject.tech
-	        ),
-	        React.createElement(
-	          'td',
-	          null,
-	          anObject.description
-	        ),
-	        React.createElement(
-	          'td',
-	          null,
-	          React.createElement(
-	            Link,
-	            { to: '/editItem' },
-	            'Edit'
-	          )
-	        )
-	      );
-	    });
-	    return React.createElement(
-	      'table',
-	      { className: 'table table-striped table-condensed table-hover' },
-	      React.createElement(
-	        'thead',
-	        { className: 'success' },
-	        React.createElement(
-	          'tr',
-	          null,
-	          React.createElement(
-	            'td',
-	            null,
-	            'Item'
-	          ),
-	          React.createElement(
-	            'td',
-	            null,
-	            'Description'
-	          ),
-	          React.createElement(
-	            'td',
-	            null,
-	            'Edit'
-	          )
-	        )
-	      ),
-	      React.createElement(
-	        'tbody',
-	        null,
-	        htmlElementArray
-	      )
-	    );
-	  }
-	});
-
-	/****************************  AddDataComp  ******************************/
-	module.exports.AddDataComp = React.createClass({
-	  displayName: 'AddDataComp',
-
-	  addRecord: function addRecord(e) {
-	    e.preventDefault();
-	    console.log("Contacting server with tech=%s and description=%s", JSON.stringify(this.state.tech), JSON.stringify(this.state.description));
-	    $.ajax({
-	      url: REST_API_URL,
-	      dataType: 'json',
-	      type: 'POST',
-	      data: { tech: this.state.tech, description: this.state.description },
-	      success: function (data) {
-	        this.setState({ tech: '', description: '' });
-	      }.bind(this),
-	      error: function (xhr, status, err) {
-	        console.error(REST_API_URL, status, err.toString());
-	      }.bind(this)
-	    });
-	  },
-	  handleChangeItemName: function handleChangeItemName(event) {
-	    console.log("handleChange");
-	    this.setState({ tech: event.target.value });
-	  },
-	  handleChangeItemDescription: function handleChangeItemDescription(event) {
-	    console.log("handleChange");
-	    this.setState({ description: event.target.value });
-	  },
-
-
-	  getInitialState: function getInitialState() {
-	    return { tech: '', description: '' };
-	  },
-
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'h3',
-	        null,
-	        'Add a new record'
-	      ),
-	      React.createElement(
-	        'form',
-	        { className: 'well', onSubmit: this.addRecord },
-	        'Item Name:',
-	        React.createElement('input', { type: 'text', placeholder: 'Item Name',
-	          onChange: this.handleChangeItemName,
-	          value: this.state.tech, required: true, className: 'form-control' }),
-	        'Item Description:',
-	        React.createElement('input', { type: 'text', placeholder: 'Item Description',
-	          onChange: this.handleChangeItemDescription,
-	          value: this.state.description, required: true, className: 'form-control' }),
-	        React.createElement('input', { type: 'submit', value: 'Add Record', className: 'form-control btn btn-warning' })
-	      )
-	    );
-	  }
-	}); //AddDataComp
-
-	/****************************  EditItemComp  ******************************/
-	module.exports.EditItemComp = React.createClass({
-	  displayName: 'EditItemComp',
-
-	  updateRecord: function updateRecord(e) {
-	    e.preventDefault();
-	    console.log("Contacting server with tech=%s and description=%s", JSON.stringify(this.state.tech), JSON.stringify(this.state.description));
-	    $.ajax({
-	      url: REST_API_URL + "/" + this.state.tech,
-	      dataType: 'json',
-	      type: 'PUT',
-	      data: { tech: this.state.tech, description: this.state.description },
-	      success: function (data) {
-	        this.setState({ tech: '', description: '' });
-	      }.bind(this),
-	      error: function (xhr, status, err) {
-	        console.error(REST_API_URL, status, err.toString());
-	      }.bind(this)
-	    });
-	  },
-
-	  getRecordFromServer: function getRecordFromServer() {
-	    $.ajax({
-	      url: REST_API_URL + "/akh",
-	      dataType: 'json',
-	      type: 'GET',
-	      cache: false,
-	      success: function (data) {
-	        this.setState(data);
-	        console.log(JSON.stringify(data));
-	      }.bind(this),
-	      error: function (xhr, status, err) {
-	        console.error(this.props.url, status, err.toString());
-	      }.bind(this)
-	    });
-	  },
-	  componentDidMount: function componentDidMount() {
-	    console.log("executing EditItemComp:componentDidMount");
-	    this.getRecordFromServer();
-	  },
-
-	  handleChangeItemDescription: function handleChangeItemDescription(event) {
-	    console.log("handleChange");
-	    this.setState({ description: event.target.value });
-	  },
-
-
-	  getInitialState: function getInitialState() {
-	    return { tech: '', description: '' };
-	  },
-
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'h3',
-	        null,
-	        'Update Record'
-	      ),
-	      React.createElement(
-	        'form',
-	        { className: 'well', onSubmit: this.updateRecord },
-	        'Item Name:',
-	        React.createElement('input', { type: 'text', placeholder: 'Item Name', readOnly: true,
-	          value: this.state.tech, required: true, className: 'form-control' }),
-	        'Item Description:',
-	        React.createElement('input', { type: 'text', placeholder: 'Item Description',
-	          onChange: this.handleChangeItemDescription,
-	          value: this.state.description, required: true, className: 'form-control' }),
-	        React.createElement('input', { type: 'submit', value: 'Update', className: 'form-control btn btn-warning' })
-	      )
-	    );
-	  }
-	}); //EditItemComp
-
-/***/ },
+/* 231 */,
 /* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -36387,6 +36030,490 @@
 	return jQuery;
 	} );
 
+
+/***/ },
+/* 233 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(10);
+	var ReactDOM = __webpack_require__(167);
+	var ReactRouter = __webpack_require__(168);
+	var $ = __webpack_require__(232);
+
+	var REST_API_URL = "/api/tech";
+
+	/****************************  AddItemComp  ******************************/
+	module.exports.AddItemComp = React.createClass({
+	  displayName: 'AddItemComp',
+
+	  addRecord: function addRecord(e) {
+	    e.preventDefault();
+	    //console.log("Contacting server with tech=%s and description=%s",
+	    // JSON.stringify(this.state.tech),
+	    // JSON.stringify(this.state.description));
+	    $.ajax({
+	      url: REST_API_URL,
+	      dataType: 'json',
+	      type: 'POST',
+	      data: { tech: this.state.tech, description: this.state.description },
+	      success: function (data) {
+	        this.setState({ tech: '', description: '' });
+	      }.bind(this),
+	      error: function (xhr, status, err) {
+	        console.error(REST_API_URL, status, err.toString());
+	      }.bind(this)
+	    });
+	  },
+	  handleChangeItemName: function handleChangeItemName(event) {
+	    //console.log("handleChangeItemName");
+	    this.setState({ tech: event.target.value });
+	  },
+	  handleChangeItemDescription: function handleChangeItemDescription(event) {
+	    //console.log("handleChangeItemDescription");
+	    this.setState({ description: event.target.value });
+	  },
+
+
+	  getInitialState: function getInitialState() {
+	    return { tech: '', description: '' };
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'h3',
+	        null,
+	        'Add a new record'
+	      ),
+	      React.createElement(
+	        'form',
+	        { className: 'well', onSubmit: this.addRecord },
+	        'Item Name:',
+	        React.createElement('input', { type: 'text', placeholder: 'Item Name',
+	          onChange: this.handleChangeItemName,
+	          value: this.state.tech, required: true, className: 'form-control' }),
+	        'Item Description:',
+	        React.createElement('input', { type: 'text', placeholder: 'Item Description',
+	          onChange: this.handleChangeItemDescription,
+	          value: this.state.description, required: true, className: 'form-control' }),
+	        React.createElement('input', { type: 'submit', value: 'Add Record', className: 'form-control btn btn-warning' })
+	      )
+	    );
+	  }
+	}); //AddDataComp
+
+	/****************************  EditItemComp  ******************************/
+	module.exports.EditItemComp = React.createClass({
+	  displayName: 'EditItemComp',
+
+	  updateRecord: function updateRecord(e) {
+	    e.preventDefault();
+	    //console.log("Contacting server with tech=%s and description=%s",
+	    //JSON.stringify(this.state.tech),
+	    //JSON.stringify(this.state.description));
+	    $.ajax({
+	      url: REST_API_URL + "/" + this.props.params.itemID,
+	      dataType: 'json',
+	      type: 'PUT',
+	      data: { tech: this.state.tech, description: this.state.description },
+	      success: function (data) {
+	        this.setState({ tech: '', description: '' });
+	      }.bind(this),
+	      error: function (xhr, status, err) {
+	        console.error(REST_API_URL, status, err.toString());
+	      }.bind(this)
+	    });
+	  },
+
+	  getRecordFromServer: function getRecordFromServer() {
+	    $.ajax({
+	      url: REST_API_URL + "/" + this.props.params.itemID,
+	      dataType: 'json',
+	      type: 'GET',
+	      cache: false,
+	      success: function (data) {
+	        this.setState(data);
+	        //console.log(JSON.stringify(data));
+	      }.bind(this),
+	      error: function (xhr, status, err) {
+	        console.error(this.props.url, status, err.toString());
+	      }.bind(this)
+	    });
+	  },
+	  componentDidMount: function componentDidMount() {
+	    //console.log("executing EditItemComp:componentDidMount");
+	    this.getRecordFromServer();
+	  },
+
+	  handleChangeItemDescription: function handleChangeItemDescription(event) {
+	    //console.log("handleChangeItemDescription");
+	    this.setState({ description: event.target.value });
+	  },
+
+
+	  getInitialState: function getInitialState() {
+	    return { tech: '', description: '' };
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'h3',
+	        null,
+	        'Update Record'
+	      ),
+	      React.createElement(
+	        'form',
+	        { className: 'well', onSubmit: this.updateRecord },
+	        'Item Name:',
+	        React.createElement('input', { type: 'text', placeholder: 'Item Name', readOnly: true,
+	          value: this.state.tech, required: true, className: 'form-control' }),
+	        'Item Description:',
+	        React.createElement('input', { type: 'text', placeholder: 'Item Description',
+	          onChange: this.handleChangeItemDescription,
+	          value: this.state.description, required: true, className: 'form-control' }),
+	        React.createElement('input', { type: 'submit', value: 'Update', className: 'form-control btn btn-warning' })
+	      )
+	    );
+	  }
+	}); //EditItemComp
+
+
+	/****************************  DeleteItemComp  ******************************/
+	module.exports.DeleteItemComp = React.createClass({
+	  displayName: 'DeleteItemComp',
+
+	  deleteRecord: function deleteRecord(e) {
+	    e.preventDefault();
+	    //console.log("Contacting server with tech=%s and description=%s",
+	    //JSON.stringify(this.state.tech),
+	    //JSON.stringify(this.state.description));
+	    $.ajax({
+	      url: REST_API_URL + "/" + this.props.params.itemID,
+	      dataType: 'json',
+	      type: 'DELETE',
+	      data: { tech: this.state.tech, description: this.state.description },
+	      success: function (data) {
+	        this.setState({ tech: '', description: '' });
+	      }.bind(this),
+	      error: function (xhr, status, err) {
+	        console.error(REST_API_URL, status, err.toString());
+	      }.bind(this)
+	    });
+	  },
+
+	  getRecordFromServer: function getRecordFromServer() {
+	    $.ajax({
+	      url: REST_API_URL + "/" + this.props.params.itemID,
+	      dataType: 'json',
+	      type: 'GET',
+	      cache: false,
+	      success: function (data) {
+	        this.setState(data);
+	        console.log(JSON.stringify(data));
+	      }.bind(this),
+	      error: function (xhr, status, err) {
+	        console.error(this.props.url, status, err.toString());
+	      }.bind(this)
+	    });
+	  },
+	  componentDidMount: function componentDidMount() {
+	    //console.log("executing EditItemComp:componentDidMount");
+	    this.getRecordFromServer();
+	  },
+
+	  getInitialState: function getInitialState() {
+	    return { tech: '', description: '' };
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'h3',
+	        null,
+	        'Delete Record'
+	      ),
+	      React.createElement(
+	        'form',
+	        { className: 'well', onSubmit: this.deleteRecord },
+	        'Item Name:',
+	        React.createElement('input', { type: 'text', placeholder: 'Item Name', readOnly: true,
+	          value: this.state.tech, required: true, className: 'form-control' }),
+	        'Item Description:',
+	        React.createElement('input', { type: 'text', placeholder: 'Item Description', readOnly: true,
+	          value: this.state.description, required: true, className: 'form-control' }),
+	        React.createElement('input', { type: 'submit', value: 'Delete', className: 'form-control btn btn-warning' })
+	      )
+	    );
+	  }
+	}); //DeleteItemComp
+
+	/****************************  HomeComp  ******************************/
+	module.exports.HomeComp = React.createClass({
+	  displayName: 'HomeComp',
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'h3',
+	        null,
+	        'Welcome'
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        'We are your online grocery store'
+	      )
+	    );
+	  }
+	});
+
+	/****************************  ContactComp  ******************************/
+	module.exports.ContactComp = React.createClass({
+	  displayName: 'ContactComp',
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'h3',
+	        null,
+	        'Contact'
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        'Web World, Bhugaon, Pune '
+	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 234 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(10);
+	var ReactDOM = __webpack_require__(167);
+	var ReactRouter = __webpack_require__(168);
+	var $ = __webpack_require__(232);
+
+	var Router = ReactRouter.Router;
+	var Route = ReactRouter.Route;
+	var IndexRoute = ReactRouter.IndexRoute;
+	var IndexLink = ReactRouter.IndexLink;
+	var Link = ReactRouter.Link;
+
+
+	var REST_API_URL = "/api/tech";
+
+	/****************************  RootComp  ******************************/
+	module.exports.RootComp = React.createClass({
+	  displayName: 'RootComp',
+
+	  getInitialState: function getInitialState() {
+	    console.log("executing AppComp:getInitialState");
+	    return { data: [] };
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
+	      React.createElement(
+	        'h1',
+	        null,
+	        ' Grocery Farm'
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'navbar-collapse collapse' },
+	        React.createElement(
+	          'ul',
+	          { className: 'nav navbar-nav' },
+	          '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              IndexLink,
+	              { to: '/' },
+	              'Home'
+	            )
+	          ),
+	          '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              Link,
+	              { to: '/items' },
+	              'Items'
+	            )
+	          ),
+	          '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              Link,
+	              { to: '/contact' },
+	              'Contact Us'
+	            )
+	          )
+	        )
+	      ),
+	      '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
+	      this.props.children,
+	      '\xA0\xA0\xA0\xA0\xA0\xA0'
+	    );
+	  }
+	});
+
+/***/ },
+/* 235 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(10);
+	var ReactDOM = __webpack_require__(167);
+	var ReactRouter = __webpack_require__(168);
+	var $ = __webpack_require__(232);
+
+	var REST_API_URL = "/api/tech";
+
+	/****************************  ItemListComp  ******************************/
+	module.exports.ItemListComp = React.createClass({
+	  displayName: 'ItemListComp',
+
+	  loadDataFromServer: function loadDataFromServer() {
+	    $.ajax({
+	      url: REST_API_URL,
+	      dataType: 'json',
+	      type: 'GET',
+	      cache: false,
+	      success: function (data) {
+	        this.setState({ serverData: data });
+	        //console.log(JSON.stringify(data));
+	      }.bind(this),
+	      error: function (xhr, status, err) {
+	        console.error(this.props.url, status, err.toString());
+	      }.bind(this)
+	    });
+	  },
+	  componentDidMount: function componentDidMount() {
+	    //console.log("executing TechnologiesComp:componentDidMount");
+	    this.loadDataFromServer();
+	  },
+	  getInitialState: function getInitialState() {
+	    return { serverData: [] };
+	  },
+
+	  render: function render() {
+	    var htmlElementArray = this.state.serverData.map(function (anObject) {
+	      return React.createElement(
+	        'tr',
+	        null,
+	        React.createElement(
+	          'td',
+	          null,
+	          anObject.tech
+	        ),
+	        React.createElement(
+	          'td',
+	          null,
+	          anObject.description
+	        ),
+	        React.createElement(
+	          'td',
+	          null,
+	          React.createElement(
+	            ReactRouter.Link,
+	            { to: '/editItem/' + anObject.tech },
+	            React.createElement('span', { className: 'glyphicon glyphicon-pencil' })
+	          )
+	        ),
+	        React.createElement(
+	          'td',
+	          null,
+	          React.createElement(
+	            ReactRouter.Link,
+	            { to: '/deleteItem/' + anObject.tech },
+	            React.createElement('span', { className: 'glyphicon glyphicon-remove' })
+	          )
+	        )
+	      );
+	    });
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        ReactRouter.Link,
+	        { to: '/addItems' },
+	        React.createElement('span', { className: 'glyphicon glyphicon-plus' }),
+	        'Add Item'
+	      ),
+	      React.createElement(
+	        'table',
+	        { className: 'table table-striped table-condensed table-hover' },
+	        React.createElement(
+	          'thead',
+	          { className: 'success' },
+	          React.createElement(
+	            'tr',
+	            null,
+	            React.createElement(
+	              'td',
+	              null,
+	              'Item'
+	            ),
+	            React.createElement(
+	              'td',
+	              null,
+	              'Description'
+	            ),
+	            React.createElement(
+	              'td',
+	              null,
+	              'Edit'
+	            ),
+	            React.createElement(
+	              'td',
+	              null,
+	              'Delete'
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          'tbody',
+	          null,
+	          htmlElementArray
+	        )
+	      ),
+	      React.createElement(
+	        ReactRouter.Link,
+	        { to: '/addItems' },
+	        React.createElement('span', { className: 'glyphicon glyphicon-plus' }),
+	        'Add Item'
+	      )
+	    );
+	  }
+	});
 
 /***/ }
 /******/ ]);
