@@ -26,11 +26,16 @@ var userSchema = new mongoose.Schema({
   password: String
 }, {collection: 'customers'});
 
-var techSchema = new mongoose.Schema({
+var GroceryItemsSchema = new mongoose.Schema({
   tech: {type: String, unique:true},
-  description: {type: String}
+  itemDescription: {type: String},
+  itemCategory: {type: String},
+  itemName: {type: String},
+  measurement: {type: Number},
+  measurementUnit: {type: String},
+  price: {type: Number}
 }, {collection: 'items'});
 
 // register the User model
 mongoose.model( 'UserModel', userSchema);
-mongoose.model( 'TechModel', techSchema);
+mongoose.model( 'GroceryItemsModel', GroceryItemsSchema);

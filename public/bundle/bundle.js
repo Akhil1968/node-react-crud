@@ -55,9 +55,9 @@
 	var React = __webpack_require__(10);
 	var ReactDOM = __webpack_require__(167);
 	var ReactRouter = __webpack_require__(168);
-	var comp = __webpack_require__(233);
-	var rootComp = __webpack_require__(234);
-	var ilComp = __webpack_require__(235);
+	var comp = __webpack_require__(231);
+	var rootComp = __webpack_require__(232);
+	var ilComp = __webpack_require__(234);
 	var Router = ReactRouter.Router;
 	var Route = ReactRouter.Route;
 	var IndexRoute = ReactRouter.IndexRoute;
@@ -25805,8 +25805,481 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 231 */,
+/* 231 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _React$createClass;
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+	var React = __webpack_require__(10);
+	var ReactDOM = __webpack_require__(167);
+	var ReactRouter = __webpack_require__(168);
+	var $ = __webpack_require__(233);
+
+	var REST_API_URL = "/api/groceryitem";
+
+	/****************************  AddItemComp  ******************************/
+	module.exports.AddItemComp = React.createClass({
+	  displayName: 'AddItemComp',
+
+	  addRecord: function addRecord(e) {
+	    e.preventDefault();
+	    //console.log("Contacting server with tech=%s and description=%s",
+	    // JSON.stringify(this.state.tech),
+	    $.ajax({
+	      url: REST_API_URL,
+	      dataType: 'json',
+	      type: 'POST',
+	      data: {
+	        tech: this.state.tech,
+	        itemDescription: this.state.itemDescription,
+	        itemCategory: this.state.itemCategory,
+	        itemName: this.state.itemName,
+	        measurement: this.state.measurement,
+	        measurementUnit: this.state.measurementUnit,
+	        price: this.state.price
+
+	      },
+	      success: function (data) {
+	        this.setState({ tech: '', description: '' });
+	      }.bind(this),
+	      error: function (xhr, status, err) {
+	        console.error(REST_API_URL, status, err.toString());
+	      }.bind(this)
+	    });
+	  },
+	  handleChangeItemName: function handleChangeItemName(event) {
+	    //console.log("handleChangeItemName");
+	    this.setState({ tech: event.target.value });
+	  },
+	  hChangeItemDescription: function hChangeItemDescription(event) {
+	    //console.log("handleChangeItemDescription");
+	    this.setState({ itemDescription: event.target.value });
+	  },
+	  hChangeItemCategory: function hChangeItemCategory(event) {
+	    this.setState({ itemCategory: event.target.value });
+	  },
+	  hChangeItemName: function hChangeItemName(event) {
+	    this.setState({ itemName: event.target.value });
+	  },
+	  hChangeMeasurement: function hChangeMeasurement(event) {
+	    this.setState({ measurement: event.target.value });
+	  },
+	  hChangeMeasurementUnit: function hChangeMeasurementUnit(event) {
+	    this.setState({ measurementUnit: event.target.value });
+	  },
+	  hChangePrice: function hChangePrice(event) {
+	    this.setState({ price: event.target.value });
+	  },
+
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      tech: '',
+	      itemDescription: '',
+	      itemCategory: '',
+	      itemName: '',
+	      measurement: 0,
+	      measurementUnit: '',
+	      price: 0
+	    };
+	  },
+
+	  render: function render() {
+	    var _React$createElement, _React$createElement2, _React$createElement3, _React$createElement4, _React$createElement5, _React$createElement6;
+
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'h3',
+	        null,
+	        'Add a new record'
+	      ),
+	      React.createElement(
+	        'form',
+	        { className: 'well', onSubmit: this.addRecord },
+	        'Item Name*:',
+	        React.createElement('input', (_React$createElement = { type: 'text', placeholder: 'Item Name', required: true,
+	          onChange: this.handleChangeItemName,
+	          value: this.state.tech }, _defineProperty(_React$createElement, 'required', true), _defineProperty(_React$createElement, 'className', 'form-control'), _React$createElement)),
+	        'Item Description:',
+	        React.createElement('input', { type: 'text', placeholder: 'Item Description',
+	          onChange: this.hChangeItemDescription,
+	          value: this.state.itemDescription, required: true, className: 'form-control' }),
+	        'Item Category*:',
+	        React.createElement('input', (_React$createElement2 = { type: 'text', placeholder: 'Item Category', required: true,
+	          onChange: this.hChangeItemCategory,
+	          value: this.state.itemCategory }, _defineProperty(_React$createElement2, 'required', true), _defineProperty(_React$createElement2, 'className', 'form-control'), _React$createElement2)),
+	        'Item Name*:',
+	        React.createElement('input', (_React$createElement3 = { type: 'text', placeholder: 'Item Name', required: true,
+	          onChange: this.hChangeItemName,
+	          value: this.state.itemName }, _defineProperty(_React$createElement3, 'required', true), _defineProperty(_React$createElement3, 'className', 'form-control'), _React$createElement3)),
+	        'Item measurement*:',
+	        React.createElement('input', (_React$createElement4 = { type: 'text', placeholder: 'Measurement', required: true,
+	          onChange: this.hChangeMeasurement,
+	          value: this.state.measurement }, _defineProperty(_React$createElement4, 'required', true), _defineProperty(_React$createElement4, 'className', 'form-control'), _React$createElement4)),
+	        'Item Measurement Unit*:',
+	        React.createElement('input', (_React$createElement5 = { type: 'text', placeholder: 'Measurement Unit', required: true,
+	          onChange: this.hChangeMeasurementUnit,
+	          value: this.state.measurementUnit }, _defineProperty(_React$createElement5, 'required', true), _defineProperty(_React$createElement5, 'className', 'form-control'), _React$createElement5)),
+	        'Item Price*:',
+	        React.createElement('input', (_React$createElement6 = { type: 'text', placeholder: 'Price', required: true,
+	          onChange: this.hChangePrice,
+	          value: this.state.price }, _defineProperty(_React$createElement6, 'required', true), _defineProperty(_React$createElement6, 'className', 'form-control'), _React$createElement6)),
+	        React.createElement('input', { type: 'submit', value: 'Add Record', className: 'form-control btn btn-warning' })
+	      )
+	    );
+	  }
+	}); //AddDataComp
+
+	/****************************  EditItemComp  ******************************/
+	module.exports.EditItemComp = React.createClass((_React$createClass = {
+	  displayName: 'EditItemComp',
+
+	  updateRecord: function updateRecord(e) {
+	    e.preventDefault();
+
+	    $.ajax({
+	      url: REST_API_URL + "/" + this.props.params.itemID,
+	      dataType: 'json',
+	      type: 'PUT',
+	      data: {
+	        tech: this.state.tech,
+	        itemDescription: this.state.itemDescription,
+	        itemCategory: this.state.itemCategory,
+	        itemName: this.state.itemName,
+	        measurement: this.state.measurement,
+	        measurementUnit: this.state.measurementUnit,
+	        price: this.state.price
+	      },
+	      success: function (data) {
+	        this.setState({ tech: '', description: '' });
+	      }.bind(this),
+	      error: function (xhr, status, err) {
+	        console.error(REST_API_URL, status, err.toString());
+	      }.bind(this)
+	    });
+	  },
+
+	  getRecordFromServer: function getRecordFromServer() {
+	    $.ajax({
+	      url: REST_API_URL + "/" + this.props.params.itemID,
+	      dataType: 'json',
+	      type: 'GET',
+	      cache: false,
+	      success: function (data) {
+	        this.setState(data);
+	        //console.log(JSON.stringify(data));
+	      }.bind(this),
+	      error: function (xhr, status, err) {
+	        console.error(this.props.url, status, err.toString());
+	      }.bind(this)
+	    });
+	  },
+	  componentDidMount: function componentDidMount() {
+	    //console.log("executing EditItemComp:componentDidMount");
+	    this.getRecordFromServer();
+	  },
+
+	  hChangeItemName: function hChangeItemName(event) {
+	    this.setState({ tech: event.target.value });
+	  },
+	  hChangeItemDescription: function hChangeItemDescription(event) {
+	    this.setState({ itemDescription: event.target.value });
+	  },
+	  hChangeItemCategory: function hChangeItemCategory(event) {
+	    this.setState({ itemCategory: event.target.value });
+	  }
+	}, _defineProperty(_React$createClass, 'hChangeItemName', function hChangeItemName(event) {
+	  this.setState({ itemName: event.target.value });
+	}), _defineProperty(_React$createClass, 'hChangeMeasurement', function hChangeMeasurement(event) {
+	  this.setState({ measurement: event.target.value });
+	}), _defineProperty(_React$createClass, 'hChangeMeasurementUnit', function hChangeMeasurementUnit(event) {
+	  this.setState({ measurementUnit: event.target.value });
+	}), _defineProperty(_React$createClass, 'hChangePrice', function hChangePrice(event) {
+	  this.setState({ price: event.target.value });
+	}), _defineProperty(_React$createClass, 'getInitialState', function getInitialState() {
+	  return {
+	    tech: '',
+	    itemDescription: '',
+	    itemCategory: '',
+	    itemName: '',
+	    measurement: 0,
+	    measurementUnit: '',
+	    price: 0
+	  };
+	}), _defineProperty(_React$createClass, 'render', function render() {
+	  var _React$createElement7, _React$createElement8, _React$createElement9, _React$createElement10, _React$createElement11, _React$createElement12;
+
+	  return React.createElement(
+	    'div',
+	    null,
+	    React.createElement(
+	      'h3',
+	      null,
+	      'Update Record'
+	    ),
+	    React.createElement(
+	      'form',
+	      { className: 'well', onSubmit: this.updateRecord },
+	      'Item Name*:',
+	      React.createElement('input', (_React$createElement7 = { type: 'text', placeholder: 'Item Name', required: true,
+	        onChange: this.hChangeItemName,
+	        value: this.state.tech }, _defineProperty(_React$createElement7, 'required', true), _defineProperty(_React$createElement7, 'className', 'form-control'), _React$createElement7)),
+	      'Item Description:',
+	      React.createElement('input', { type: 'text', placeholder: 'Item Description',
+	        onChange: this.hChangeItemDescription,
+	        value: this.state.itemDescription, required: true, className: 'form-control' }),
+	      'Item Category*:',
+	      React.createElement('input', (_React$createElement8 = { type: 'text', placeholder: 'Item Category', required: true,
+	        onChange: this.hChangeItemCategory,
+	        value: this.state.itemCategory }, _defineProperty(_React$createElement8, 'required', true), _defineProperty(_React$createElement8, 'className', 'form-control'), _React$createElement8)),
+	      'Item Name*:',
+	      React.createElement('input', (_React$createElement9 = { type: 'text', placeholder: 'Item Name', required: true,
+	        onChange: this.hChangeItemName,
+	        value: this.state.itemName }, _defineProperty(_React$createElement9, 'required', true), _defineProperty(_React$createElement9, 'className', 'form-control'), _React$createElement9)),
+	      'Item measurement*:',
+	      React.createElement('input', (_React$createElement10 = { type: 'text', placeholder: 'Measurement', required: true,
+	        onChange: this.hChangeMeasurement,
+	        value: this.state.measurement }, _defineProperty(_React$createElement10, 'required', true), _defineProperty(_React$createElement10, 'className', 'form-control'), _React$createElement10)),
+	      'Item Measurement Unit*:',
+	      React.createElement('input', (_React$createElement11 = { type: 'text', placeholder: 'Measurement Unit', required: true,
+	        onChange: this.hChangeMeasurementUnit,
+	        value: this.state.measurementUnit }, _defineProperty(_React$createElement11, 'required', true), _defineProperty(_React$createElement11, 'className', 'form-control'), _React$createElement11)),
+	      'Item Price*:',
+	      React.createElement('input', (_React$createElement12 = { type: 'text', placeholder: 'Price', required: true,
+	        onChange: this.hChangePrice,
+	        value: this.state.price }, _defineProperty(_React$createElement12, 'required', true), _defineProperty(_React$createElement12, 'className', 'form-control'), _React$createElement12)),
+	      React.createElement('input', { type: 'submit', value: 'Update', className: 'form-control btn btn-warning' })
+	    )
+	  );
+	}), _React$createClass)); //EditItemComp
+
+
+	/****************************  DeleteItemComp  ******************************/
+	module.exports.DeleteItemComp = React.createClass({
+	  displayName: 'DeleteItemComp',
+
+	  deleteRecord: function deleteRecord(e) {
+	    e.preventDefault();
+	    //console.log("Contacting server with tech=%s and description=%s",
+	    $.ajax({
+	      url: REST_API_URL + "/" + this.props.params.itemID,
+	      dataType: 'json',
+	      type: 'DELETE',
+	      data: { tech: this.state.tech },
+	      success: function (data) {
+	        this.setState({ tech: '', description: '' });
+	      }.bind(this),
+	      error: function (xhr, status, err) {
+	        console.error(REST_API_URL, status, err.toString());
+	      }.bind(this)
+	    });
+	  },
+
+	  getRecordFromServer: function getRecordFromServer() {
+	    $.ajax({
+	      url: REST_API_URL + "/" + this.props.params.itemID,
+	      dataType: 'json',
+	      type: 'GET',
+	      cache: false,
+	      success: function (data) {
+	        this.setState(data);
+	        console.log(JSON.stringify(data));
+	      }.bind(this),
+	      error: function (xhr, status, err) {
+	        console.error(this.props.url, status, err.toString());
+	      }.bind(this)
+	    });
+	  },
+	  componentDidMount: function componentDidMount() {
+	    //console.log("executing EditItemComp:componentDidMount");
+	    this.getRecordFromServer();
+	  },
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      tech: '',
+	      itemDescription: '',
+	      itemCategory: '',
+	      itemName: '',
+	      measurement: 0,
+	      measurementUnit: '',
+	      price: 0
+	    };
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'h3',
+	        null,
+	        'Delete Record'
+	      ),
+	      React.createElement(
+	        'form',
+	        { className: 'well', onSubmit: this.deleteRecord },
+	        'Item Name:',
+	        React.createElement('input', { type: 'text', placeholder: 'Item Name', readOnly: true,
+	          value: this.state.tech, required: true, className: 'form-control' }),
+	        'Item Description:',
+	        React.createElement('input', { type: 'text', placeholder: 'Item Description', readOnly: true,
+	          value: this.state.itemDescription, required: true, className: 'form-control' }),
+	        'Item Category:',
+	        React.createElement('input', { type: 'text', placeholder: 'Item Category', readOnly: true,
+	          value: this.state.itemCategory, required: true, className: 'form-control' }),
+	        'Item Name:',
+	        React.createElement('input', { type: 'text', placeholder: 'Item Name', readOnly: true,
+	          value: this.state.itemName, required: true, className: 'form-control' }),
+	        'Item Measurement:',
+	        React.createElement('input', { type: 'text', placeholder: 'Item Measurement', readOnly: true,
+	          value: this.state.measurement, required: true, className: 'form-control' }),
+	        'Measurement Unit:',
+	        React.createElement('input', { type: 'text', placeholder: 'Measurement Unit', readOnly: true,
+	          value: this.state.measurementUnit, required: true, className: 'form-control' }),
+	        'Price:',
+	        React.createElement('input', { type: 'text', placeholder: 'Price', readOnly: true,
+	          value: this.state.price, required: true, className: 'form-control' }),
+	        React.createElement('input', { type: 'submit', value: 'Delete', className: 'form-control btn btn-warning' })
+	      )
+	    );
+	  }
+	}); //DeleteItemComp
+
+	/****************************  HomeComp  ******************************/
+	module.exports.HomeComp = React.createClass({
+	  displayName: 'HomeComp',
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'h3',
+	        null,
+	        'Welcome'
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        'We are your online grocery store'
+	      )
+	    );
+	  }
+	});
+
+	/****************************  ContactComp  ******************************/
+	module.exports.ContactComp = React.createClass({
+	  displayName: 'ContactComp',
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'h3',
+	        null,
+	        'Contact'
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        'Web World, Bhugaon, Pune '
+	      )
+	    );
+	  }
+	});
+
+/***/ },
 /* 232 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(10);
+	var ReactDOM = __webpack_require__(167);
+	var ReactRouter = __webpack_require__(168);
+	var $ = __webpack_require__(233);
+
+	var Router = ReactRouter.Router;
+	var Route = ReactRouter.Route;
+	var IndexRoute = ReactRouter.IndexRoute;
+	var IndexLink = ReactRouter.IndexLink;
+	var Link = ReactRouter.Link;
+
+	/****************************  RootComp  ******************************/
+
+	module.exports.RootComp = React.createClass({
+	  displayName: 'RootComp',
+
+	  getInitialState: function getInitialState() {
+	    console.log("executing AppComp:getInitialState");
+	    return { data: [] };
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
+	      React.createElement(
+	        'h1',
+	        null,
+	        ' Grocery Farm'
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'navbar-collapse collapse' },
+	        React.createElement(
+	          'ul',
+	          { className: 'nav navbar-nav' },
+	          '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              IndexLink,
+	              { to: '/' },
+	              'Home'
+	            )
+	          ),
+	          '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              Link,
+	              { to: '/items' },
+	              'Items'
+	            )
+	          ),
+	          '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              Link,
+	              { to: '/contact' },
+	              'Contact Us'
+	            )
+	          )
+	        )
+	      ),
+	      '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
+	      this.props.children,
+	      '\xA0\xA0\xA0\xA0\xA0\xA0'
+	    );
+	  }
+	});
+
+/***/ },
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -36032,275 +36505,6 @@
 
 
 /***/ },
-/* 233 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(10);
-	var ReactDOM = __webpack_require__(167);
-	var ReactRouter = __webpack_require__(168);
-	var $ = __webpack_require__(232);
-
-	var REST_API_URL = "/api/tech";
-
-	/****************************  AddItemComp  ******************************/
-	module.exports.AddItemComp = React.createClass({
-	  displayName: 'AddItemComp',
-
-	  addRecord: function addRecord(e) {
-	    e.preventDefault();
-	    //console.log("Contacting server with tech=%s and description=%s",
-	    // JSON.stringify(this.state.tech),
-	    // JSON.stringify(this.state.description));
-	    $.ajax({
-	      url: REST_API_URL,
-	      dataType: 'json',
-	      type: 'POST',
-	      data: { tech: this.state.tech, description: this.state.description },
-	      success: function (data) {
-	        this.setState({ tech: '', description: '' });
-	      }.bind(this),
-	      error: function (xhr, status, err) {
-	        console.error(REST_API_URL, status, err.toString());
-	      }.bind(this)
-	    });
-	  },
-	  handleChangeItemName: function handleChangeItemName(event) {
-	    //console.log("handleChangeItemName");
-	    this.setState({ tech: event.target.value });
-	  },
-	  handleChangeItemDescription: function handleChangeItemDescription(event) {
-	    //console.log("handleChangeItemDescription");
-	    this.setState({ description: event.target.value });
-	  },
-
-
-	  getInitialState: function getInitialState() {
-	    return { tech: '', description: '' };
-	  },
-
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'h3',
-	        null,
-	        'Add a new record'
-	      ),
-	      React.createElement(
-	        'form',
-	        { className: 'well', onSubmit: this.addRecord },
-	        'Item Name:',
-	        React.createElement('input', { type: 'text', placeholder: 'Item Name',
-	          onChange: this.handleChangeItemName,
-	          value: this.state.tech, required: true, className: 'form-control' }),
-	        'Item Description:',
-	        React.createElement('input', { type: 'text', placeholder: 'Item Description',
-	          onChange: this.handleChangeItemDescription,
-	          value: this.state.description, required: true, className: 'form-control' }),
-	        React.createElement('input', { type: 'submit', value: 'Add Record', className: 'form-control btn btn-warning' })
-	      )
-	    );
-	  }
-	}); //AddDataComp
-
-	/****************************  EditItemComp  ******************************/
-	module.exports.EditItemComp = React.createClass({
-	  displayName: 'EditItemComp',
-
-	  updateRecord: function updateRecord(e) {
-	    e.preventDefault();
-	    //console.log("Contacting server with tech=%s and description=%s",
-	    //JSON.stringify(this.state.tech),
-	    //JSON.stringify(this.state.description));
-	    $.ajax({
-	      url: REST_API_URL + "/" + this.props.params.itemID,
-	      dataType: 'json',
-	      type: 'PUT',
-	      data: { tech: this.state.tech, description: this.state.description },
-	      success: function (data) {
-	        this.setState({ tech: '', description: '' });
-	      }.bind(this),
-	      error: function (xhr, status, err) {
-	        console.error(REST_API_URL, status, err.toString());
-	      }.bind(this)
-	    });
-	  },
-
-	  getRecordFromServer: function getRecordFromServer() {
-	    $.ajax({
-	      url: REST_API_URL + "/" + this.props.params.itemID,
-	      dataType: 'json',
-	      type: 'GET',
-	      cache: false,
-	      success: function (data) {
-	        this.setState(data);
-	        //console.log(JSON.stringify(data));
-	      }.bind(this),
-	      error: function (xhr, status, err) {
-	        console.error(this.props.url, status, err.toString());
-	      }.bind(this)
-	    });
-	  },
-	  componentDidMount: function componentDidMount() {
-	    //console.log("executing EditItemComp:componentDidMount");
-	    this.getRecordFromServer();
-	  },
-
-	  handleChangeItemDescription: function handleChangeItemDescription(event) {
-	    //console.log("handleChangeItemDescription");
-	    this.setState({ description: event.target.value });
-	  },
-
-
-	  getInitialState: function getInitialState() {
-	    return { tech: '', description: '' };
-	  },
-
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'h3',
-	        null,
-	        'Update Record'
-	      ),
-	      React.createElement(
-	        'form',
-	        { className: 'well', onSubmit: this.updateRecord },
-	        'Item Name:',
-	        React.createElement('input', { type: 'text', placeholder: 'Item Name', readOnly: true,
-	          value: this.state.tech, required: true, className: 'form-control' }),
-	        'Item Description:',
-	        React.createElement('input', { type: 'text', placeholder: 'Item Description',
-	          onChange: this.handleChangeItemDescription,
-	          value: this.state.description, required: true, className: 'form-control' }),
-	        React.createElement('input', { type: 'submit', value: 'Update', className: 'form-control btn btn-warning' })
-	      )
-	    );
-	  }
-	}); //EditItemComp
-
-
-	/****************************  DeleteItemComp  ******************************/
-	module.exports.DeleteItemComp = React.createClass({
-	  displayName: 'DeleteItemComp',
-
-	  deleteRecord: function deleteRecord(e) {
-	    e.preventDefault();
-	    //console.log("Contacting server with tech=%s and description=%s",
-	    //JSON.stringify(this.state.tech),
-	    //JSON.stringify(this.state.description));
-	    $.ajax({
-	      url: REST_API_URL + "/" + this.props.params.itemID,
-	      dataType: 'json',
-	      type: 'DELETE',
-	      data: { tech: this.state.tech, description: this.state.description },
-	      success: function (data) {
-	        this.setState({ tech: '', description: '' });
-	      }.bind(this),
-	      error: function (xhr, status, err) {
-	        console.error(REST_API_URL, status, err.toString());
-	      }.bind(this)
-	    });
-	  },
-
-	  getRecordFromServer: function getRecordFromServer() {
-	    $.ajax({
-	      url: REST_API_URL + "/" + this.props.params.itemID,
-	      dataType: 'json',
-	      type: 'GET',
-	      cache: false,
-	      success: function (data) {
-	        this.setState(data);
-	        console.log(JSON.stringify(data));
-	      }.bind(this),
-	      error: function (xhr, status, err) {
-	        console.error(this.props.url, status, err.toString());
-	      }.bind(this)
-	    });
-	  },
-	  componentDidMount: function componentDidMount() {
-	    //console.log("executing EditItemComp:componentDidMount");
-	    this.getRecordFromServer();
-	  },
-
-	  getInitialState: function getInitialState() {
-	    return { tech: '', description: '' };
-	  },
-
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'h3',
-	        null,
-	        'Delete Record'
-	      ),
-	      React.createElement(
-	        'form',
-	        { className: 'well', onSubmit: this.deleteRecord },
-	        'Item Name:',
-	        React.createElement('input', { type: 'text', placeholder: 'Item Name', readOnly: true,
-	          value: this.state.tech, required: true, className: 'form-control' }),
-	        'Item Description:',
-	        React.createElement('input', { type: 'text', placeholder: 'Item Description', readOnly: true,
-	          value: this.state.description, required: true, className: 'form-control' }),
-	        React.createElement('input', { type: 'submit', value: 'Delete', className: 'form-control btn btn-warning' })
-	      )
-	    );
-	  }
-	}); //DeleteItemComp
-
-	/****************************  HomeComp  ******************************/
-	module.exports.HomeComp = React.createClass({
-	  displayName: 'HomeComp',
-
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'h3',
-	        null,
-	        'Welcome'
-	      ),
-	      React.createElement(
-	        'p',
-	        null,
-	        'We are your online grocery store'
-	      )
-	    );
-	  }
-	});
-
-	/****************************  ContactComp  ******************************/
-	module.exports.ContactComp = React.createClass({
-	  displayName: 'ContactComp',
-
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'h3',
-	        null,
-	        'Contact'
-	      ),
-	      React.createElement(
-	        'p',
-	        null,
-	        'Web World, Bhugaon, Pune '
-	      )
-	    );
-	  }
-	});
-
-/***/ },
 /* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -36309,93 +36513,9 @@
 	var React = __webpack_require__(10);
 	var ReactDOM = __webpack_require__(167);
 	var ReactRouter = __webpack_require__(168);
-	var $ = __webpack_require__(232);
+	var $ = __webpack_require__(233);
 
-	var Router = ReactRouter.Router;
-	var Route = ReactRouter.Route;
-	var IndexRoute = ReactRouter.IndexRoute;
-	var IndexLink = ReactRouter.IndexLink;
-	var Link = ReactRouter.Link;
-
-
-	var REST_API_URL = "/api/tech";
-
-	/****************************  RootComp  ******************************/
-	module.exports.RootComp = React.createClass({
-	  displayName: 'RootComp',
-
-	  getInitialState: function getInitialState() {
-	    console.log("executing AppComp:getInitialState");
-	    return { data: [] };
-	  },
-
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
-	      React.createElement(
-	        'h1',
-	        null,
-	        ' Grocery Farm'
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'navbar-collapse collapse' },
-	        React.createElement(
-	          'ul',
-	          { className: 'nav navbar-nav' },
-	          '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              IndexLink,
-	              { to: '/' },
-	              'Home'
-	            )
-	          ),
-	          '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              Link,
-	              { to: '/items' },
-	              'Items'
-	            )
-	          ),
-	          '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              Link,
-	              { to: '/contact' },
-	              'Contact Us'
-	            )
-	          )
-	        )
-	      ),
-	      '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
-	      this.props.children,
-	      '\xA0\xA0\xA0\xA0\xA0\xA0'
-	    );
-	  }
-	});
-
-/***/ },
-/* 235 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(10);
-	var ReactDOM = __webpack_require__(167);
-	var ReactRouter = __webpack_require__(168);
-	var $ = __webpack_require__(232);
-
-	var REST_API_URL = "/api/tech";
+	var REST_API_URL = "/api/groceryitem";
 
 	/****************************  ItemListComp  ******************************/
 	module.exports.ItemListComp = React.createClass({
@@ -36437,7 +36557,32 @@
 	        React.createElement(
 	          'td',
 	          null,
-	          anObject.description
+	          anObject.itemDescription
+	        ),
+	        React.createElement(
+	          'td',
+	          null,
+	          anObject.itemCategory
+	        ),
+	        React.createElement(
+	          'td',
+	          null,
+	          anObject.itemName
+	        ),
+	        React.createElement(
+	          'td',
+	          null,
+	          anObject.measurement
+	        ),
+	        React.createElement(
+	          'td',
+	          null,
+	          anObject.measurementUnit
+	        ),
+	        React.createElement(
+	          'td',
+	          null,
+	          anObject.price
 	        ),
 	        React.createElement(
 	          'td',
@@ -36486,6 +36631,31 @@
 	              'td',
 	              null,
 	              'Description'
+	            ),
+	            React.createElement(
+	              'td',
+	              null,
+	              'Category'
+	            ),
+	            React.createElement(
+	              'td',
+	              null,
+	              'Item Name'
+	            ),
+	            React.createElement(
+	              'td',
+	              null,
+	              'Measurement'
+	            ),
+	            React.createElement(
+	              'td',
+	              null,
+	              'Measurement Unit'
+	            ),
+	            React.createElement(
+	              'td',
+	              null,
+	              'Price'
 	            ),
 	            React.createElement(
 	              'td',

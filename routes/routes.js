@@ -1,9 +1,7 @@
 var mongoose = require( 'mongoose' );
 var UserModel = mongoose.model( 'UserModel' );
-var TechModel = mongoose.model( 'TechModel' );
+var GroceryItemsModel = mongoose.model( 'GroceryItemsModel' );
 var chalk = require('chalk');
-var app = require('../app');//expressJS allows circular dependencies
-
 
 exports.authHandler = function (req, res){
 	var nmReq = req.body.loginName;
@@ -50,58 +48,82 @@ exports.registerUserHandler = function(req, res){
 /* ******** ******** REST API HANDLERS ******** ********  */
 /* ******** ******** ******** ******** ******** ********  */
 exports.getAllHandler = function (req, res){
-  //app.get('/api/tech'
-  TechModel.find({}, function(err, techArray){
+  //app.get('/groceryitem/tech'
+  GroceryItemsModel.find({}, function(err, theArray){
     if (!err){
-      res.json(techArray);
-      //console.log("tech array being returned=" + JSON.stringify(techArray));
+      res.json(theArray);
     }
-  }); //TechModel.find
+  }); //GroceryItemsModel.find
 }; //getAllHandler
 
 exports.getOneHandler = function(req, res){
-  //app.get('api/edit/:tech'
-  var techToEdit = req.params.tech;
-  console.log("techToEdit="  + techToEdit);
-  TechModel.findOne({tech:techToEdit}, function(err, techRec){
+  //app.get('api/groceryitem/:ITEMID'
+  var itemToEdit = req.params.ITEMID;
+  console.log("itemToEdit="  + itemToEdit);
+  GroceryItemsModel.findOne({tech:itemToEdit}, function(err, aRec){
   if (!err){
-    console.log(chalk.yellow("Going to edit -> [" + techRec.tech + " : " + techRec.description + "]"));
-    res.json(techRec);
+    console.log(chalk.yellow("Going to edit -> [" + aRec.tech + "]"));
+    res.json(aRec);
   }
 
-}); //TechModel.findOne
+}); //GroceryItemsModel.findOne
 }; //getOneHandler
 
 exports.postOneHandler = function(req, res){
-  //app.post('/api/tech'
+  //app.post('/api/groceryitem'
+	var techReq 						= req.body.tech ? req.body.tech: "";
+  var itemDescriptionReq 	= req.body.itemDescription ? req.body.itemDescription : "";
+	var itemCategoryReq 		= req.body.itemCategory ? req.body.itemCategory : "";
+	var itemNameReq 				= req.body.itemName ? req.body.itemName : "";
+	var	measurementReq 			= req.body.measurement ? req.body.measurement : 0;
+	var	measurementUnitReq 	= req.body.measurementUnit ? req.body.measurementUnit : "";
+	var	priceReq						= req.body.price ? req.body.price : 0;
 
   var message;
-  var newTech = new TechModel();
-  newTech.tech = req.body.tech;
-  newTech.description = req.body.description;
-	console.log("Received tech=%s descr=%s", req.body.tech, req.body.description);
+  var newRecord = new GroceryItemsModel();
+  newRecord.tech 						= techReq;
+  newRecord.itemDescription = itemDescriptionReq;
+	newRecord.itemCategory 		= itemCategoryReq;
+	newRecord.itemName				= itemNameReq;
+	newRecord.measurement 		= measurementReq;
+	newRecord.measurementUnit = measurementUnitReq;
+	newRecord.price						= priceReq;
+
+	console.log("Received tech=%s itemDescription=%s", techReq, itemDescriptionReq);
    //save to db through model :: Add a record
-   newTech.save(function(err, savedUser){
-  if(err){
-     res.json(false);
-     console.log(newTech.tech + " could not be added");
-   }else{
-     res.json(true);
-     console.log(newTech.tech + " added successfully");
-   }
-   }); //newTech.save
+  newRecord.save(function(err, savedUser){
+	  if(err){
+	     res.json(false);
+	     console.log(newRecord.tech + " could not be added");
+	   }else{
+	     res.json(true);
+	     console.log(newRecord.tech + " added successfully");
+	   }
+   }); //newRecord.save
 }; //postOneHandler
 
 exports.updateOneHandler = function(req, res){
-  //app.put('/api/tech'
-  var techRequest = req.params.tech;
+  //app.put('/api/groceryitem'
+  var techReq 						= req.params.ITEMID ? req.params.ITEMID: "";
+  var itemDescriptionReq 	= req.body.itemDescription ? req.body.itemDescription : "";
+	var itemCategoryReq 		= req.body.itemCategory ? req.body.itemCategory : "";
+	var itemNameReq 				= req.body.itemName ? req.body.itemName : "";
+	var	measurementReq 			= req.body.measurement ? req.body.measurement : 0;
+	var	measurementUnitReq 	= req.body.measurementUnit ? req.body.measurementUnit : "";
+	var	priceReq						= req.body.price ? req.body.price : 0;
 
-  var techDescrRequest = req.body.description;
-  console.log("Saving Edited records : " + techRequest + " : " + techDescrRequest);
+  console.log("Saving Edited records : " + techReq + " : " + itemDescriptionReq);
   var message;
   //update rec through model
-  TechModel.update({tech:techRequest},
-                    {$set: { description: techDescrRequest }},
+  GroceryItemsModel.update({tech:techReq},
+                    {$set: {
+											itemDescription: 	itemDescriptionReq,
+											itemCategory: 		itemCategoryReq,
+											itemName: 				itemNameReq,
+											measurement: 			measurementReq,
+											measurementUnit: 	measurementUnitReq,
+											price: 						priceReq
+										 }},
                     {multi:false}, function(err, updatedRec){
    if(err){
      res.json(false);
@@ -112,15 +134,15 @@ exports.updateOneHandler = function(req, res){
 }; //updateOneHandler
 
 exports.deleteOneHandler = function(req, res){
-  //app.delete('/api/tech/:tech'
-  var techToEdit = req.params.tech;
-  TechModel.remove({tech:techToEdit}, function(err, techRec){
+  //app.delete('/api/groceryitem/:ITEMID'
+  var recToEdit = req.params.ITEMID;
+  GroceryItemsModel.remove({tech:recToEdit}, function(err, deletedRec){
     if(err){
        res.json(false);
-       console.log(techToEdit + " could not be deleted");
+       console.log(recToEdit + " could not be deleted");
      }else{
        res.json(true);
-       console.log(techToEdit + " deleted successfully");
+       console.log(recToEdit + " deleted successfully");
      }
-  }); //TechModel.remove
+  }); //GroceryItemsModel.remove
 }; //deleteOneHandler

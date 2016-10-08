@@ -5,8 +5,6 @@ var $ = require ('jquery');
 
 var { Router, Route, IndexRoute, IndexLink, Link } = ReactRouter;
 
-const REST_API_URL = "/api/tech";
-
 /****************************  RootComp  ******************************/
 module.exports.RootComp = React.createClass({
   getInitialState: function() {

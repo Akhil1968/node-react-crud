@@ -3,7 +3,7 @@ var ReactDOM = require('react-dom');
 var ReactRouter = require('react-router');
 var $ = require ('jquery');
 
-const REST_API_URL = "/api/tech";
+const REST_API_URL = "/api/groceryitem";
 
 /****************************  ItemListComp  ******************************/
 module.exports.ItemListComp = React.createClass({
@@ -34,7 +34,12 @@ module.exports.ItemListComp = React.createClass({
       var htmlElementArray = this.state.serverData.map(function(anObject) {
         return (<tr>
                   <td>{anObject.tech}</td>
-                  <td>{anObject.description}</td>
+                  <td>{anObject.itemDescription}</td>
+                  <td>{anObject.itemCategory}</td>
+                  <td>{anObject.itemName}</td>
+                  <td>{anObject.measurement}</td>
+                  <td>{anObject.measurementUnit}</td>
+                  <td>{anObject.price}</td>
                   <td><ReactRouter.Link to={'/editItem/' + anObject.tech}>
                     <span className="glyphicon glyphicon-pencil"></span>
                   </ReactRouter.Link></td>
@@ -54,6 +59,11 @@ module.exports.ItemListComp = React.createClass({
           <tr>
             <td>Item</td>
             <td>Description</td>
+            <td>Category</td>
+            <td>Item Name</td>
+            <td>Measurement</td>
+            <td>Measurement Unit</td>
+            <td>Price</td>
             <td>Edit</td>
             <td>Delete</td>
           </tr>
@@ -62,7 +72,7 @@ module.exports.ItemListComp = React.createClass({
           {htmlElementArray}
         </tbody>
         </table>
-        
+
         <ReactRouter.Link to={'/addItems'}>
           <span className="glyphicon glyphicon-plus"></span>Add Item
         </ReactRouter.Link>
