@@ -9,8 +9,6 @@ const REST_API_URL = "/api/groceryitem";
 module.exports.AddItemComp = React.createClass({
   addRecord: function(e) {
     e.preventDefault();
-    //console.log("Contacting server with tech=%s and description=%s",
-    // JSON.stringify(this.state.tech),
     $.ajax({
       url: REST_API_URL,
       dataType: 'json',
@@ -26,7 +24,7 @@ module.exports.AddItemComp = React.createClass({
 
       },
       success: function(data) {
-        this.setState({tech: '', description:''});
+        this.props.history.push('/items');
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(REST_API_URL, status, err.toString());
@@ -137,7 +135,7 @@ module.exports.EditItemComp = React.createClass({
         price:            this.state.price
       },
       success: function(data) {
-        this.setState({tech: '', description:''});
+        this.props.history.push('/items');
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(REST_API_URL, status, err.toString());
@@ -257,7 +255,7 @@ module.exports.DeleteItemComp = React.createClass({
       type: 'DELETE',
       data: {tech: this.state.tech},
       success: function(data) {
-        this.setState({tech: '', description:''});
+        this.props.history.push('/items');
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(REST_API_URL, status, err.toString());

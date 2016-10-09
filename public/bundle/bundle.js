@@ -56,7 +56,7 @@
 	var ReactDOM = __webpack_require__(167);
 	var ReactRouter = __webpack_require__(168);
 	var comp = __webpack_require__(231);
-	var rootComp = __webpack_require__(232);
+	var rootComp = __webpack_require__(233);
 	var ilComp = __webpack_require__(234);
 	var Router = ReactRouter.Router;
 	var Route = ReactRouter.Route;
@@ -25817,7 +25817,7 @@
 	var React = __webpack_require__(10);
 	var ReactDOM = __webpack_require__(167);
 	var ReactRouter = __webpack_require__(168);
-	var $ = __webpack_require__(233);
+	var $ = __webpack_require__(232);
 
 	var REST_API_URL = "/api/groceryitem";
 
@@ -25827,8 +25827,6 @@
 
 	  addRecord: function addRecord(e) {
 	    e.preventDefault();
-	    //console.log("Contacting server with tech=%s and description=%s",
-	    // JSON.stringify(this.state.tech),
 	    $.ajax({
 	      url: REST_API_URL,
 	      dataType: 'json',
@@ -25844,7 +25842,7 @@
 
 	      },
 	      success: function (data) {
-	        this.setState({ tech: '', description: '' });
+	        this.props.history.push('/items');
 	      }.bind(this),
 	      error: function (xhr, status, err) {
 	        console.error(REST_API_URL, status, err.toString());
@@ -25957,7 +25955,7 @@
 	        price: this.state.price
 	      },
 	      success: function (data) {
-	        this.setState({ tech: '', description: '' });
+	        this.props.history.push('/items');
 	      }.bind(this),
 	      error: function (xhr, status, err) {
 	        console.error(REST_API_URL, status, err.toString());
@@ -26073,7 +26071,7 @@
 	      type: 'DELETE',
 	      data: { tech: this.state.tech },
 	      success: function (data) {
-	        this.setState({ tech: '', description: '' });
+	        this.props.history.push('/items');
 	      }.bind(this),
 	      error: function (xhr, status, err) {
 	        console.error(REST_API_URL, status, err.toString());
@@ -26198,88 +26196,6 @@
 
 /***/ },
 /* 232 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(10);
-	var ReactDOM = __webpack_require__(167);
-	var ReactRouter = __webpack_require__(168);
-	var $ = __webpack_require__(233);
-
-	var Router = ReactRouter.Router;
-	var Route = ReactRouter.Route;
-	var IndexRoute = ReactRouter.IndexRoute;
-	var IndexLink = ReactRouter.IndexLink;
-	var Link = ReactRouter.Link;
-
-	/****************************  RootComp  ******************************/
-
-	module.exports.RootComp = React.createClass({
-	  displayName: 'RootComp',
-
-	  getInitialState: function getInitialState() {
-	    console.log("executing AppComp:getInitialState");
-	    return { data: [] };
-	  },
-
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
-	      React.createElement(
-	        'h1',
-	        null,
-	        ' Grocery Farm'
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'navbar-collapse collapse' },
-	        React.createElement(
-	          'ul',
-	          { className: 'nav navbar-nav' },
-	          '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              IndexLink,
-	              { to: '/' },
-	              'Home'
-	            )
-	          ),
-	          '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              Link,
-	              { to: '/items' },
-	              'Items'
-	            )
-	          ),
-	          '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              Link,
-	              { to: '/contact' },
-	              'Contact Us'
-	            )
-	          )
-	        )
-	      ),
-	      '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
-	      this.props.children,
-	      '\xA0\xA0\xA0\xA0\xA0\xA0'
-	    );
-	  }
-	});
-
-/***/ },
-/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -36505,6 +36421,88 @@
 
 
 /***/ },
+/* 233 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(10);
+	var ReactDOM = __webpack_require__(167);
+	var ReactRouter = __webpack_require__(168);
+	var $ = __webpack_require__(232);
+
+	var Router = ReactRouter.Router;
+	var Route = ReactRouter.Route;
+	var IndexRoute = ReactRouter.IndexRoute;
+	var IndexLink = ReactRouter.IndexLink;
+	var Link = ReactRouter.Link;
+
+	/****************************  RootComp  ******************************/
+
+	module.exports.RootComp = React.createClass({
+	  displayName: 'RootComp',
+
+	  getInitialState: function getInitialState() {
+	    console.log("executing AppComp:getInitialState");
+	    return { data: [] };
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
+	      React.createElement(
+	        'h1',
+	        null,
+	        ' Grocery Farm'
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'navbar-collapse collapse' },
+	        React.createElement(
+	          'ul',
+	          { className: 'nav navbar-nav' },
+	          '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              IndexLink,
+	              { to: '/' },
+	              'Home'
+	            )
+	          ),
+	          '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              Link,
+	              { to: '/items' },
+	              'Items'
+	            )
+	          ),
+	          '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              Link,
+	              { to: '/contact' },
+	              'Contact Us'
+	            )
+	          )
+	        )
+	      ),
+	      '\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0',
+	      this.props.children,
+	      '\xA0\xA0\xA0\xA0\xA0\xA0'
+	    );
+	  }
+	});
+
+/***/ },
 /* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -36513,7 +36511,7 @@
 	var React = __webpack_require__(10);
 	var ReactDOM = __webpack_require__(167);
 	var ReactRouter = __webpack_require__(168);
-	var $ = __webpack_require__(233);
+	var $ = __webpack_require__(232);
 
 	var REST_API_URL = "/api/groceryitem";
 
