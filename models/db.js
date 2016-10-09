@@ -27,14 +27,14 @@ var userSchema = new mongoose.Schema({
 }, {collection: 'customers'});
 
 var GroceryItemsSchema = new mongoose.Schema({
-  tech: {type: String, unique:true},
+  key: {type: String, unique:true},
   itemDescription: {type: String},
   itemCategory: {type: String},
   itemName: {type: String},
   measurement: {type: Number},
   measurementUnit: {type: String},
   price: {type: Number}
-}, {collection: 'items'});
+}, {collection: 'grocery-items'});
 
 // register the User model
 mongoose.model( 'UserModel', userSchema);

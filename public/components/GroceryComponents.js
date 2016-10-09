@@ -14,7 +14,7 @@ module.exports.AddItemComp = React.createClass({
       dataType: 'json',
       type: 'POST',
       data: {
-        tech:             this.state.tech,
+        key:             this.state.key,
         itemDescription:  this.state.itemDescription,
         itemCategory:     this.state.itemCategory,
         itemName:         this.state.itemName,
@@ -33,7 +33,7 @@ module.exports.AddItemComp = React.createClass({
   },
   handleChangeItemName(event) {
     //console.log("handleChangeItemName");
-    this.setState({tech: event.target.value});
+    this.setState({key: event.target.value});
   },
   hChangeItemDescription(event) {
     //console.log("handleChangeItemDescription");
@@ -58,7 +58,7 @@ module.exports.AddItemComp = React.createClass({
 
   getInitialState: function() {
     return {
-      tech: '',
+      key: '',
       itemDescription: '',
       itemCategory: '',
       itemName: '',
@@ -77,7 +77,7 @@ module.exports.AddItemComp = React.createClass({
           Item Name*:
           <input type="text" placeholder="Item Name" required
             onChange={this.handleChangeItemName}
-            value={this.state.tech} required className="form-control"/>
+            value={this.state.key} required className="form-control"/>
 
           Item Description:
           <input type="text" placeholder="Item Description"
@@ -126,7 +126,7 @@ module.exports.EditItemComp = React.createClass({
       dataType: 'json',
       type: 'PUT',
       data: {
-        tech:             this.state.tech,
+        key:             this.state.key,
         itemDescription:  this.state.itemDescription,
         itemCategory:     this.state.itemCategory,
         itemName:         this.state.itemName,
@@ -164,16 +164,13 @@ module.exports.EditItemComp = React.createClass({
   },
 
   hChangeItemName(event) {
-    this.setState({tech: event.target.value});
+    this.setState({key: event.target.value});
   },
   hChangeItemDescription(event) {
     this.setState({itemDescription: event.target.value});
   },
   hChangeItemCategory(event) {
     this.setState({itemCategory: event.target.value});
-  },
-  hChangeItemName(event) {
-    this.setState({itemName: event.target.value});
   },
   hChangeMeasurement(event) {
     this.setState({measurement: event.target.value});
@@ -187,7 +184,7 @@ module.exports.EditItemComp = React.createClass({
 
   getInitialState: function() {
     return  {
-        tech: '',
+        key: '',
         itemDescription: '',
         itemCategory: '',
         itemName: '',
@@ -205,7 +202,7 @@ module.exports.EditItemComp = React.createClass({
             Item Name*:
             <input type="text" placeholder="Item Name" required
               onChange={this.hChangeItemName}
-              value={this.state.tech} required className="form-control"/>
+              value={this.state.key} required className="form-control"/>
 
             Item Description:
             <input type="text" placeholder="Item Description"
@@ -248,12 +245,12 @@ module.exports.EditItemComp = React.createClass({
 module.exports.DeleteItemComp = React.createClass({
   deleteRecord: function(e) {
     e.preventDefault();
-     //console.log("Contacting server with tech=%s and description=%s",
+
     $.ajax({
       url: REST_API_URL + "/" + this.props.params.itemID,
       dataType: 'json',
       type: 'DELETE',
-      data: {tech: this.state.tech},
+      data: {key: this.state.key},
       success: function(data) {
         this.props.history.push('/items');
       }.bind(this),
@@ -285,7 +282,7 @@ module.exports.DeleteItemComp = React.createClass({
 
   getInitialState: function() {
     return  {
-        tech: '',
+        key: '',
         itemDescription: '',
         itemCategory: '',
         itemName: '',
@@ -302,7 +299,7 @@ module.exports.DeleteItemComp = React.createClass({
           <form className="well" onSubmit={this.deleteRecord}>
           Item Name:
           <input type="text" placeholder="Item Name" readOnly
-            value={this.state.tech} required className="form-control"/>
+            value={this.state.key} required className="form-control"/>
 
           Item Description:
           <input type="text" placeholder="Item Description" readOnly

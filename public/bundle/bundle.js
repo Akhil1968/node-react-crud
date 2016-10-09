@@ -25810,8 +25810,6 @@
 
 	'use strict';
 
-	var _React$createClass;
-
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 	var React = __webpack_require__(10);
@@ -25832,7 +25830,7 @@
 	      dataType: 'json',
 	      type: 'POST',
 	      data: {
-	        tech: this.state.tech,
+	        key: this.state.key,
 	        itemDescription: this.state.itemDescription,
 	        itemCategory: this.state.itemCategory,
 	        itemName: this.state.itemName,
@@ -25851,7 +25849,7 @@
 	  },
 	  handleChangeItemName: function handleChangeItemName(event) {
 	    //console.log("handleChangeItemName");
-	    this.setState({ tech: event.target.value });
+	    this.setState({ key: event.target.value });
 	  },
 	  hChangeItemDescription: function hChangeItemDescription(event) {
 	    //console.log("handleChangeItemDescription");
@@ -25876,7 +25874,7 @@
 
 	  getInitialState: function getInitialState() {
 	    return {
-	      tech: '',
+	      key: '',
 	      itemDescription: '',
 	      itemCategory: '',
 	      itemName: '',
@@ -25903,7 +25901,7 @@
 	        'Item Name*:',
 	        React.createElement('input', (_React$createElement = { type: 'text', placeholder: 'Item Name', required: true,
 	          onChange: this.handleChangeItemName,
-	          value: this.state.tech }, _defineProperty(_React$createElement, 'required', true), _defineProperty(_React$createElement, 'className', 'form-control'), _React$createElement)),
+	          value: this.state.key }, _defineProperty(_React$createElement, 'required', true), _defineProperty(_React$createElement, 'className', 'form-control'), _React$createElement)),
 	        'Item Description:',
 	        React.createElement('input', { type: 'text', placeholder: 'Item Description',
 	          onChange: this.hChangeItemDescription,
@@ -25935,7 +25933,7 @@
 	}); //AddDataComp
 
 	/****************************  EditItemComp  ******************************/
-	module.exports.EditItemComp = React.createClass((_React$createClass = {
+	module.exports.EditItemComp = React.createClass({
 	  displayName: 'EditItemComp',
 
 	  updateRecord: function updateRecord(e) {
@@ -25946,7 +25944,7 @@
 	      dataType: 'json',
 	      type: 'PUT',
 	      data: {
-	        tech: this.state.tech,
+	        key: this.state.key,
 	        itemDescription: this.state.itemDescription,
 	        itemCategory: this.state.itemCategory,
 	        itemName: this.state.itemName,
@@ -25984,78 +25982,84 @@
 	  },
 
 	  hChangeItemName: function hChangeItemName(event) {
-	    this.setState({ tech: event.target.value });
+	    this.setState({ key: event.target.value });
 	  },
 	  hChangeItemDescription: function hChangeItemDescription(event) {
 	    this.setState({ itemDescription: event.target.value });
 	  },
 	  hChangeItemCategory: function hChangeItemCategory(event) {
 	    this.setState({ itemCategory: event.target.value });
-	  }
-	}, _defineProperty(_React$createClass, 'hChangeItemName', function hChangeItemName(event) {
-	  this.setState({ itemName: event.target.value });
-	}), _defineProperty(_React$createClass, 'hChangeMeasurement', function hChangeMeasurement(event) {
-	  this.setState({ measurement: event.target.value });
-	}), _defineProperty(_React$createClass, 'hChangeMeasurementUnit', function hChangeMeasurementUnit(event) {
-	  this.setState({ measurementUnit: event.target.value });
-	}), _defineProperty(_React$createClass, 'hChangePrice', function hChangePrice(event) {
-	  this.setState({ price: event.target.value });
-	}), _defineProperty(_React$createClass, 'getInitialState', function getInitialState() {
-	  return {
-	    tech: '',
-	    itemDescription: '',
-	    itemCategory: '',
-	    itemName: '',
-	    measurement: 0,
-	    measurementUnit: '',
-	    price: 0
-	  };
-	}), _defineProperty(_React$createClass, 'render', function render() {
-	  var _React$createElement7, _React$createElement8, _React$createElement9, _React$createElement10, _React$createElement11, _React$createElement12;
+	  },
+	  hChangeMeasurement: function hChangeMeasurement(event) {
+	    this.setState({ measurement: event.target.value });
+	  },
+	  hChangeMeasurementUnit: function hChangeMeasurementUnit(event) {
+	    this.setState({ measurementUnit: event.target.value });
+	  },
+	  hChangePrice: function hChangePrice(event) {
+	    this.setState({ price: event.target.value });
+	  },
 
-	  return React.createElement(
-	    'div',
-	    null,
-	    React.createElement(
-	      'h3',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      key: '',
+	      itemDescription: '',
+	      itemCategory: '',
+	      itemName: '',
+	      measurement: 0,
+	      measurementUnit: '',
+	      price: 0
+	    };
+	  },
+
+	  render: function render() {
+	    var _React$createElement7, _React$createElement8, _React$createElement9, _React$createElement10, _React$createElement11, _React$createElement12;
+
+	    return React.createElement(
+	      'div',
 	      null,
-	      'Update Record'
-	    ),
-	    React.createElement(
-	      'form',
-	      { className: 'well', onSubmit: this.updateRecord },
-	      'Item Name*:',
-	      React.createElement('input', (_React$createElement7 = { type: 'text', placeholder: 'Item Name', required: true,
-	        onChange: this.hChangeItemName,
-	        value: this.state.tech }, _defineProperty(_React$createElement7, 'required', true), _defineProperty(_React$createElement7, 'className', 'form-control'), _React$createElement7)),
-	      'Item Description:',
-	      React.createElement('input', { type: 'text', placeholder: 'Item Description',
-	        onChange: this.hChangeItemDescription,
-	        value: this.state.itemDescription, required: true, className: 'form-control' }),
-	      'Item Category*:',
-	      React.createElement('input', (_React$createElement8 = { type: 'text', placeholder: 'Item Category', required: true,
-	        onChange: this.hChangeItemCategory,
-	        value: this.state.itemCategory }, _defineProperty(_React$createElement8, 'required', true), _defineProperty(_React$createElement8, 'className', 'form-control'), _React$createElement8)),
-	      'Item Name*:',
-	      React.createElement('input', (_React$createElement9 = { type: 'text', placeholder: 'Item Name', required: true,
-	        onChange: this.hChangeItemName,
-	        value: this.state.itemName }, _defineProperty(_React$createElement9, 'required', true), _defineProperty(_React$createElement9, 'className', 'form-control'), _React$createElement9)),
-	      'Item measurement*:',
-	      React.createElement('input', (_React$createElement10 = { type: 'text', placeholder: 'Measurement', required: true,
-	        onChange: this.hChangeMeasurement,
-	        value: this.state.measurement }, _defineProperty(_React$createElement10, 'required', true), _defineProperty(_React$createElement10, 'className', 'form-control'), _React$createElement10)),
-	      'Item Measurement Unit*:',
-	      React.createElement('input', (_React$createElement11 = { type: 'text', placeholder: 'Measurement Unit', required: true,
-	        onChange: this.hChangeMeasurementUnit,
-	        value: this.state.measurementUnit }, _defineProperty(_React$createElement11, 'required', true), _defineProperty(_React$createElement11, 'className', 'form-control'), _React$createElement11)),
-	      'Item Price*:',
-	      React.createElement('input', (_React$createElement12 = { type: 'text', placeholder: 'Price', required: true,
-	        onChange: this.hChangePrice,
-	        value: this.state.price }, _defineProperty(_React$createElement12, 'required', true), _defineProperty(_React$createElement12, 'className', 'form-control'), _React$createElement12)),
-	      React.createElement('input', { type: 'submit', value: 'Update', className: 'form-control btn btn-warning' })
-	    )
-	  );
-	}), _React$createClass)); //EditItemComp
+	      React.createElement(
+	        'h3',
+	        null,
+	        'Update Record'
+	      ),
+	      React.createElement(
+	        'form',
+	        { className: 'well', onSubmit: this.updateRecord },
+	        'Item Name*:',
+	        React.createElement('input', (_React$createElement7 = { type: 'text', placeholder: 'Item Name', required: true,
+	          onChange: this.hChangeItemName,
+	          value: this.state.key }, _defineProperty(_React$createElement7, 'required', true), _defineProperty(_React$createElement7, 'className', 'form-control'), _React$createElement7)),
+	        'Item Description:',
+	        React.createElement('input', { type: 'text', placeholder: 'Item Description',
+	          onChange: this.hChangeItemDescription,
+	          value: this.state.itemDescription, required: true, className: 'form-control' }),
+	        'Item Category*:',
+	        React.createElement('input', (_React$createElement8 = { type: 'text', placeholder: 'Item Category', required: true,
+	          onChange: this.hChangeItemCategory,
+	          value: this.state.itemCategory }, _defineProperty(_React$createElement8, 'required', true), _defineProperty(_React$createElement8, 'className', 'form-control'), _React$createElement8)),
+	        'Item Name*:',
+	        React.createElement('input', (_React$createElement9 = { type: 'text', placeholder: 'Item Name', required: true,
+	          onChange: this.hChangeItemName,
+	          value: this.state.itemName }, _defineProperty(_React$createElement9, 'required', true), _defineProperty(_React$createElement9, 'className', 'form-control'), _React$createElement9)),
+	        'Item measurement*:',
+	        React.createElement('input', (_React$createElement10 = { type: 'text', placeholder: 'Measurement', required: true,
+	          onChange: this.hChangeMeasurement,
+	          value: this.state.measurement }, _defineProperty(_React$createElement10, 'required', true), _defineProperty(_React$createElement10, 'className', 'form-control'), _React$createElement10)),
+	        'Item Measurement Unit*:',
+	        React.createElement('input', (_React$createElement11 = { type: 'text', placeholder: 'Measurement Unit', required: true,
+	          onChange: this.hChangeMeasurementUnit,
+	          value: this.state.measurementUnit }, _defineProperty(_React$createElement11, 'required', true), _defineProperty(_React$createElement11, 'className', 'form-control'), _React$createElement11)),
+	        'Item Price*:',
+	        React.createElement('input', (_React$createElement12 = { type: 'text', placeholder: 'Price', required: true,
+	          onChange: this.hChangePrice,
+	          value: this.state.price }, _defineProperty(_React$createElement12, 'required', true), _defineProperty(_React$createElement12, 'className', 'form-control'), _React$createElement12)),
+	        React.createElement('input', { type: 'submit', value: 'Update', className: 'form-control btn btn-warning' })
+	      )
+	    );
+	  }
+	}); //EditItemComp
 
 
 	/****************************  DeleteItemComp  ******************************/
@@ -26064,12 +26068,12 @@
 
 	  deleteRecord: function deleteRecord(e) {
 	    e.preventDefault();
-	    //console.log("Contacting server with tech=%s and description=%s",
+
 	    $.ajax({
 	      url: REST_API_URL + "/" + this.props.params.itemID,
 	      dataType: 'json',
 	      type: 'DELETE',
-	      data: { tech: this.state.tech },
+	      data: { key: this.state.key },
 	      success: function (data) {
 	        this.props.history.push('/items');
 	      }.bind(this),
@@ -26101,7 +26105,7 @@
 
 	  getInitialState: function getInitialState() {
 	    return {
-	      tech: '',
+	      key: '',
 	      itemDescription: '',
 	      itemCategory: '',
 	      itemName: '',
@@ -26125,7 +26129,7 @@
 	        { className: 'well', onSubmit: this.deleteRecord },
 	        'Item Name:',
 	        React.createElement('input', { type: 'text', placeholder: 'Item Name', readOnly: true,
-	          value: this.state.tech, required: true, className: 'form-control' }),
+	          value: this.state.key, required: true, className: 'form-control' }),
 	        'Item Description:',
 	        React.createElement('input', { type: 'text', placeholder: 'Item Description', readOnly: true,
 	          value: this.state.itemDescription, required: true, className: 'form-control' }),
@@ -36535,7 +36539,6 @@
 	    });
 	  },
 	  componentDidMount: function componentDidMount() {
-	    //console.log("executing TechnologiesComp:componentDidMount");
 	    this.loadDataFromServer();
 	  },
 	  getInitialState: function getInitialState() {
@@ -36550,7 +36553,7 @@
 	        React.createElement(
 	          'td',
 	          null,
-	          anObject.tech
+	          anObject.key
 	        ),
 	        React.createElement(
 	          'td',
@@ -36587,7 +36590,7 @@
 	          null,
 	          React.createElement(
 	            ReactRouter.Link,
-	            { to: '/editItem/' + anObject.tech },
+	            { to: '/editItem/' + anObject.key },
 	            React.createElement('span', { className: 'glyphicon glyphicon-pencil' })
 	          )
 	        ),
@@ -36596,7 +36599,7 @@
 	          null,
 	          React.createElement(
 	            ReactRouter.Link,
-	            { to: '/deleteItem/' + anObject.tech },
+	            { to: '/deleteItem/' + anObject.key },
 	            React.createElement('span', { className: 'glyphicon glyphicon-remove' })
 	          )
 	        )

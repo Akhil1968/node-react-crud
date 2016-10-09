@@ -23,7 +23,6 @@ module.exports.ItemListComp = React.createClass({
     });
   },
   componentDidMount: function() {
-    //console.log("executing TechnologiesComp:componentDidMount");
     this.loadDataFromServer();
   },
   getInitialState: function() {
@@ -33,17 +32,17 @@ module.exports.ItemListComp = React.createClass({
   render: function() {
       var htmlElementArray = this.state.serverData.map(function(anObject) {
         return (<tr>
-                  <td>{anObject.tech}</td>
+                  <td>{anObject.key}</td>
                   <td>{anObject.itemDescription}</td>
                   <td>{anObject.itemCategory}</td>
                   <td>{anObject.itemName}</td>
                   <td>{anObject.measurement}</td>
                   <td>{anObject.measurementUnit}</td>
                   <td>{anObject.price}</td>
-                  <td><ReactRouter.Link to={'/editItem/' + anObject.tech}>
+                  <td><ReactRouter.Link to={'/editItem/' + anObject.key}>
                     <span className="glyphicon glyphicon-pencil"></span>
                   </ReactRouter.Link></td>
-                  <td><ReactRouter.Link to={'/deleteItem/' + anObject.tech}>
+                <td><ReactRouter.Link to={'/deleteItem/' + anObject.key}>
                     <span className="glyphicon glyphicon-remove"></span>
                   </ReactRouter.Link></td>
                 </tr>);

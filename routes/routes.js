@@ -48,7 +48,7 @@ exports.registerUserHandler = function(req, res){
 /* ******** ******** REST API HANDLERS ******** ********  */
 /* ******** ******** ******** ******** ******** ********  */
 exports.getAllHandler = function (req, res){
-  //app.get('/groceryitem/tech'
+  //app.get('api//groceryitem'
   GroceryItemsModel.find({}, function(err, theArray){
     if (!err){
       res.json(theArray);
@@ -60,9 +60,9 @@ exports.getOneHandler = function(req, res){
   //app.get('api/groceryitem/:ITEMID'
   var itemToEdit = req.params.ITEMID;
   console.log("itemToEdit="  + itemToEdit);
-  GroceryItemsModel.findOne({tech:itemToEdit}, function(err, aRec){
+  GroceryItemsModel.findOne({key:itemToEdit}, function(err, aRec){
   if (!err){
-    console.log(chalk.yellow("Going to edit -> [" + aRec.tech + "]"));
+    console.log(chalk.yellow("Going to edit -> [" + aRec.key + "]"));
     res.json(aRec);
   }
 
@@ -71,7 +71,7 @@ exports.getOneHandler = function(req, res){
 
 exports.postOneHandler = function(req, res){
   //app.post('/api/groceryitem'
-	var techReq 						= req.body.tech ? req.body.tech: "";
+	var keyReq 						= req.body.key ? req.body.key: "";
   var itemDescriptionReq 	= req.body.itemDescription ? req.body.itemDescription : "";
 	var itemCategoryReq 		= req.body.itemCategory ? req.body.itemCategory : "";
 	var itemNameReq 				= req.body.itemName ? req.body.itemName : "";
@@ -81,7 +81,7 @@ exports.postOneHandler = function(req, res){
 
   var message;
   var newRecord = new GroceryItemsModel();
-  newRecord.tech 						= techReq;
+  newRecord.key 						= keyReq;
   newRecord.itemDescription = itemDescriptionReq;
 	newRecord.itemCategory 		= itemCategoryReq;
 	newRecord.itemName				= itemNameReq;
@@ -89,22 +89,22 @@ exports.postOneHandler = function(req, res){
 	newRecord.measurementUnit = measurementUnitReq;
 	newRecord.price						= priceReq;
 
-	console.log("Received tech=%s itemDescription=%s", techReq, itemDescriptionReq);
+	console.log("Received key=%s itemDescription=%s", keyReq, itemDescriptionReq);
    //save to db through model :: Add a record
   newRecord.save(function(err, savedUser){
 	  if(err){
 	     res.json(false);
-	     console.log(newRecord.tech + " could not be added");
+	     console.log(newRecord.key + " could not be added");
 	   }else{
 	     res.json(true);
-	     console.log(newRecord.tech + " added successfully");
+	     console.log(newRecord.key + " added successfully");
 	   }
    }); //newRecord.save
 }; //postOneHandler
 
 exports.updateOneHandler = function(req, res){
   //app.put('/api/groceryitem'
-  var techReq 						= req.params.ITEMID ? req.params.ITEMID: "";
+  var keyReq 						= req.params.ITEMID ? req.params.ITEMID: "";
   var itemDescriptionReq 	= req.body.itemDescription ? req.body.itemDescription : "";
 	var itemCategoryReq 		= req.body.itemCategory ? req.body.itemCategory : "";
 	var itemNameReq 				= req.body.itemName ? req.body.itemName : "";
@@ -112,10 +112,10 @@ exports.updateOneHandler = function(req, res){
 	var	measurementUnitReq 	= req.body.measurementUnit ? req.body.measurementUnit : "";
 	var	priceReq						= req.body.price ? req.body.price : 0;
 
-  console.log("Saving Edited records : " + techReq + " : " + itemDescriptionReq);
+  console.log("Saving Edited records : " + keyReq + " : " + itemDescriptionReq);
   var message;
   //update rec through model
-  GroceryItemsModel.update({tech:techReq},
+  GroceryItemsModel.update({key:keyReq},
                     {$set: {
 											itemDescription: 	itemDescriptionReq,
 											itemCategory: 		itemCategoryReq,
@@ -136,7 +136,7 @@ exports.updateOneHandler = function(req, res){
 exports.deleteOneHandler = function(req, res){
   //app.delete('/api/groceryitem/:ITEMID'
   var recToEdit = req.params.ITEMID;
-  GroceryItemsModel.remove({tech:recToEdit}, function(err, deletedRec){
+  GroceryItemsModel.remove({key:recToEdit}, function(err, deletedRec){
     if(err){
        res.json(false);
        console.log(recToEdit + " could not be deleted");
