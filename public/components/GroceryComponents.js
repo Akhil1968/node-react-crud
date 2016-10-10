@@ -2,19 +2,22 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var ReactRouter = require('react-router');
 var $ = require ('jquery');
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
 
 const REST_API_URL = "/api/groceryitem";
 
 /****************************  AddItemComp  ******************************/
 module.exports.AddItemComp = React.createClass({
+  mixins: [LinkedStateMixin], //mandatory for using linkState in current component
   addRecord: function(e) {
     e.preventDefault();
+    console.log("add record");
     $.ajax({
       url: REST_API_URL,
       dataType: 'json',
       type: 'POST',
       data: {
-        key:             this.state.key,
+        key:              this.state.key,
         itemDescription:  this.state.itemDescription,
         itemCategory:     this.state.itemCategory,
         itemName:         this.state.itemName,
@@ -24,7 +27,13 @@ module.exports.AddItemComp = React.createClass({
 
       },
       success: function(data) {
-        this.props.history.push('/items');
+        if (data){
+          console.log("A record has been added succesfully");
+          this.props.history.push('/items');
+        }else{
+          console.log("Recordcould not be added.");
+        }
+        
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(REST_API_URL, status, err.toString());
@@ -76,38 +85,31 @@ module.exports.AddItemComp = React.createClass({
 
           Item Name*:
           <input type="text" placeholder="Item Name" required
-            onChange={this.handleChangeItemName}
-            value={this.state.key} required className="form-control"/>
+            valueLink={this.linkState('key')} required className="form-control"/>
 
           Item Description:
           <input type="text" placeholder="Item Description"
-            onChange={this.hChangeItemDescription}
-            value={this.state.itemDescription} required className="form-control"/>
+            valueLink={this.linkState('itemDescription')} required className="form-control"/>
 
           Item Category*:
           <input type="text" placeholder="Item Category" required
-            onChange={this.hChangeItemCategory}
-            value={this.state.itemCategory} required className="form-control"/>
+            valueLink={this.linkState('itemCategory')} required className="form-control"/>
 
           Item Name*:
           <input type="text" placeholder="Item Name" required
-            onChange={this.hChangeItemName}
-            value={this.state.itemName} required className="form-control"/>
+            valueLink={this.linkState('itemName')} required className="form-control"/>
 
           Item measurement*:
           <input type="text" placeholder="Measurement" required
-            onChange={this.hChangeMeasurement}
-            value={this.state.measurement} required className="form-control"/>
+            valueLink={this.linkState('measurement')} required className="form-control"/>
 
           Item Measurement Unit*:
           <input type="text" placeholder="Measurement Unit" required
-            onChange={this.hChangeMeasurementUnit}
-            value={this.state.measurementUnit} required className="form-control"/>
+            valueLink={this.linkState('measurementUnit')} required className="form-control"/>
 
           Item Price*:
           <input type="text" placeholder="Price" required
-            onChange={this.hChangePrice}
-            value={this.state.price} required className="form-control"/>
+            valueLink={this.linkState('price')} required className="form-control"/>
 
           <input type="submit" value="Add Record" className="form-control btn btn-warning"/>
           </form>
@@ -118,6 +120,7 @@ module.exports.AddItemComp = React.createClass({
 
 /****************************  EditItemComp  ******************************/
 module.exports.EditItemComp = React.createClass({
+  mixins: [LinkedStateMixin],
   updateRecord: function(e) {
     e.preventDefault();
 
@@ -126,7 +129,7 @@ module.exports.EditItemComp = React.createClass({
       dataType: 'json',
       type: 'PUT',
       data: {
-        key:             this.state.key,
+        key:              this.state.key,
         itemDescription:  this.state.itemDescription,
         itemCategory:     this.state.itemCategory,
         itemName:         this.state.itemName,
@@ -201,38 +204,32 @@ module.exports.EditItemComp = React.createClass({
           <form className="well" onSubmit={this.updateRecord}>
             Item Name*:
             <input type="text" placeholder="Item Name" required
-              onChange={this.hChangeItemName}
-              value={this.state.key} required className="form-control"/>
+              valueLink={this.linkState('key')} required className="form-control"/>
 
             Item Description:
             <input type="text" placeholder="Item Description"
-              onChange={this.hChangeItemDescription}
-              value={this.state.itemDescription} required className="form-control"/>
+              valueLink={this.linkState('itemDescription')} required className="form-control"/>
 
             Item Category*:
             <input type="text" placeholder="Item Category" required
-              onChange={this.hChangeItemCategory}
-              value={this.state.itemCategory} required className="form-control"/>
+              valueLink={this.linkState('itemCategory')} required className="form-control"/>
 
             Item Name*:
             <input type="text" placeholder="Item Name" required
-              onChange={this.hChangeItemName}
-              value={this.state.itemName} required className="form-control"/>
+              valueLink={this.linkState('itemName')} required className="form-control"/>
 
             Item measurement*:
             <input type="text" placeholder="Measurement" required
-              onChange={this.hChangeMeasurement}
-              value={this.state.measurement} required className="form-control"/>
+              valueLink={this.linkState('measurement')} required className="form-control"/>
 
             Item Measurement Unit*:
             <input type="text" placeholder="Measurement Unit" required
-              onChange={this.hChangeMeasurementUnit}
-              value={this.state.measurementUnit} required className="form-control"/>
+              valueLink={this.linkState('measurementUnit')} required className="form-control"/>
 
             Item Price*:
             <input type="text" placeholder="Price" required
-              onChange={this.hChangePrice}
-              value={this.state.price} required className="form-control"/>
+              valueLink={this.linkState('price')} required className="form-control"/>
+
           <input type="submit" value="Update" className="form-control btn btn-warning"/>
           </form>
         </div>

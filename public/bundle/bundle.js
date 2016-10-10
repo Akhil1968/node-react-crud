@@ -56,8 +56,8 @@
 	var ReactDOM = __webpack_require__(167);
 	var ReactRouter = __webpack_require__(168);
 	var comp = __webpack_require__(231);
-	var rootComp = __webpack_require__(233);
-	var ilComp = __webpack_require__(234);
+	var rootComp = __webpack_require__(237);
+	var ilComp = __webpack_require__(238);
 	var Router = ReactRouter.Router;
 	var Route = ReactRouter.Route;
 	var IndexRoute = ReactRouter.IndexRoute;
@@ -25816,6 +25816,7 @@
 	var ReactDOM = __webpack_require__(167);
 	var ReactRouter = __webpack_require__(168);
 	var $ = __webpack_require__(232);
+	var LinkedStateMixin = __webpack_require__(233);
 
 	var REST_API_URL = "/api/groceryitem";
 
@@ -25823,8 +25824,10 @@
 	module.exports.AddItemComp = React.createClass({
 	  displayName: 'AddItemComp',
 
+	  mixins: [LinkedStateMixin], //mandatory for using linkState in current component
 	  addRecord: function addRecord(e) {
 	    e.preventDefault();
+	    console.log("add record");
 	    $.ajax({
 	      url: REST_API_URL,
 	      dataType: 'json',
@@ -25840,7 +25843,12 @@
 
 	      },
 	      success: function (data) {
-	        this.props.history.push('/items');
+	        if (data) {
+	          console.log("A record has been added succesfully");
+	          this.props.history.push('/items');
+	        } else {
+	          console.log("Recordcould not be added.");
+	        }
 	      }.bind(this),
 	      error: function (xhr, status, err) {
 	        console.error(REST_API_URL, status, err.toString());
@@ -25900,32 +25908,25 @@
 	        { className: 'well', onSubmit: this.addRecord },
 	        'Item Name*:',
 	        React.createElement('input', (_React$createElement = { type: 'text', placeholder: 'Item Name', required: true,
-	          onChange: this.handleChangeItemName,
-	          value: this.state.key }, _defineProperty(_React$createElement, 'required', true), _defineProperty(_React$createElement, 'className', 'form-control'), _React$createElement)),
+	          valueLink: this.linkState('key') }, _defineProperty(_React$createElement, 'required', true), _defineProperty(_React$createElement, 'className', 'form-control'), _React$createElement)),
 	        'Item Description:',
 	        React.createElement('input', { type: 'text', placeholder: 'Item Description',
-	          onChange: this.hChangeItemDescription,
-	          value: this.state.itemDescription, required: true, className: 'form-control' }),
+	          valueLink: this.linkState('itemDescription'), required: true, className: 'form-control' }),
 	        'Item Category*:',
 	        React.createElement('input', (_React$createElement2 = { type: 'text', placeholder: 'Item Category', required: true,
-	          onChange: this.hChangeItemCategory,
-	          value: this.state.itemCategory }, _defineProperty(_React$createElement2, 'required', true), _defineProperty(_React$createElement2, 'className', 'form-control'), _React$createElement2)),
+	          valueLink: this.linkState('itemCategory') }, _defineProperty(_React$createElement2, 'required', true), _defineProperty(_React$createElement2, 'className', 'form-control'), _React$createElement2)),
 	        'Item Name*:',
 	        React.createElement('input', (_React$createElement3 = { type: 'text', placeholder: 'Item Name', required: true,
-	          onChange: this.hChangeItemName,
-	          value: this.state.itemName }, _defineProperty(_React$createElement3, 'required', true), _defineProperty(_React$createElement3, 'className', 'form-control'), _React$createElement3)),
+	          valueLink: this.linkState('itemName') }, _defineProperty(_React$createElement3, 'required', true), _defineProperty(_React$createElement3, 'className', 'form-control'), _React$createElement3)),
 	        'Item measurement*:',
 	        React.createElement('input', (_React$createElement4 = { type: 'text', placeholder: 'Measurement', required: true,
-	          onChange: this.hChangeMeasurement,
-	          value: this.state.measurement }, _defineProperty(_React$createElement4, 'required', true), _defineProperty(_React$createElement4, 'className', 'form-control'), _React$createElement4)),
+	          valueLink: this.linkState('measurement') }, _defineProperty(_React$createElement4, 'required', true), _defineProperty(_React$createElement4, 'className', 'form-control'), _React$createElement4)),
 	        'Item Measurement Unit*:',
 	        React.createElement('input', (_React$createElement5 = { type: 'text', placeholder: 'Measurement Unit', required: true,
-	          onChange: this.hChangeMeasurementUnit,
-	          value: this.state.measurementUnit }, _defineProperty(_React$createElement5, 'required', true), _defineProperty(_React$createElement5, 'className', 'form-control'), _React$createElement5)),
+	          valueLink: this.linkState('measurementUnit') }, _defineProperty(_React$createElement5, 'required', true), _defineProperty(_React$createElement5, 'className', 'form-control'), _React$createElement5)),
 	        'Item Price*:',
 	        React.createElement('input', (_React$createElement6 = { type: 'text', placeholder: 'Price', required: true,
-	          onChange: this.hChangePrice,
-	          value: this.state.price }, _defineProperty(_React$createElement6, 'required', true), _defineProperty(_React$createElement6, 'className', 'form-control'), _React$createElement6)),
+	          valueLink: this.linkState('price') }, _defineProperty(_React$createElement6, 'required', true), _defineProperty(_React$createElement6, 'className', 'form-control'), _React$createElement6)),
 	        React.createElement('input', { type: 'submit', value: 'Add Record', className: 'form-control btn btn-warning' })
 	      )
 	    );
@@ -25936,6 +25937,7 @@
 	module.exports.EditItemComp = React.createClass({
 	  displayName: 'EditItemComp',
 
+	  mixins: [LinkedStateMixin],
 	  updateRecord: function updateRecord(e) {
 	    e.preventDefault();
 
@@ -26029,32 +26031,25 @@
 	        { className: 'well', onSubmit: this.updateRecord },
 	        'Item Name*:',
 	        React.createElement('input', (_React$createElement7 = { type: 'text', placeholder: 'Item Name', required: true,
-	          onChange: this.hChangeItemName,
-	          value: this.state.key }, _defineProperty(_React$createElement7, 'required', true), _defineProperty(_React$createElement7, 'className', 'form-control'), _React$createElement7)),
+	          valueLink: this.linkState('key') }, _defineProperty(_React$createElement7, 'required', true), _defineProperty(_React$createElement7, 'className', 'form-control'), _React$createElement7)),
 	        'Item Description:',
 	        React.createElement('input', { type: 'text', placeholder: 'Item Description',
-	          onChange: this.hChangeItemDescription,
-	          value: this.state.itemDescription, required: true, className: 'form-control' }),
+	          valueLink: this.linkState('itemDescription'), required: true, className: 'form-control' }),
 	        'Item Category*:',
 	        React.createElement('input', (_React$createElement8 = { type: 'text', placeholder: 'Item Category', required: true,
-	          onChange: this.hChangeItemCategory,
-	          value: this.state.itemCategory }, _defineProperty(_React$createElement8, 'required', true), _defineProperty(_React$createElement8, 'className', 'form-control'), _React$createElement8)),
+	          valueLink: this.linkState('itemCategory') }, _defineProperty(_React$createElement8, 'required', true), _defineProperty(_React$createElement8, 'className', 'form-control'), _React$createElement8)),
 	        'Item Name*:',
 	        React.createElement('input', (_React$createElement9 = { type: 'text', placeholder: 'Item Name', required: true,
-	          onChange: this.hChangeItemName,
-	          value: this.state.itemName }, _defineProperty(_React$createElement9, 'required', true), _defineProperty(_React$createElement9, 'className', 'form-control'), _React$createElement9)),
+	          valueLink: this.linkState('itemName') }, _defineProperty(_React$createElement9, 'required', true), _defineProperty(_React$createElement9, 'className', 'form-control'), _React$createElement9)),
 	        'Item measurement*:',
 	        React.createElement('input', (_React$createElement10 = { type: 'text', placeholder: 'Measurement', required: true,
-	          onChange: this.hChangeMeasurement,
-	          value: this.state.measurement }, _defineProperty(_React$createElement10, 'required', true), _defineProperty(_React$createElement10, 'className', 'form-control'), _React$createElement10)),
+	          valueLink: this.linkState('measurement') }, _defineProperty(_React$createElement10, 'required', true), _defineProperty(_React$createElement10, 'className', 'form-control'), _React$createElement10)),
 	        'Item Measurement Unit*:',
 	        React.createElement('input', (_React$createElement11 = { type: 'text', placeholder: 'Measurement Unit', required: true,
-	          onChange: this.hChangeMeasurementUnit,
-	          value: this.state.measurementUnit }, _defineProperty(_React$createElement11, 'required', true), _defineProperty(_React$createElement11, 'className', 'form-control'), _React$createElement11)),
+	          valueLink: this.linkState('measurementUnit') }, _defineProperty(_React$createElement11, 'required', true), _defineProperty(_React$createElement11, 'className', 'form-control'), _React$createElement11)),
 	        'Item Price*:',
 	        React.createElement('input', (_React$createElement12 = { type: 'text', placeholder: 'Price', required: true,
-	          onChange: this.hChangePrice,
-	          value: this.state.price }, _defineProperty(_React$createElement12, 'required', true), _defineProperty(_React$createElement12, 'className', 'form-control'), _React$createElement12)),
+	          valueLink: this.linkState('price') }, _defineProperty(_React$createElement12, 'required', true), _defineProperty(_React$createElement12, 'className', 'form-control'), _React$createElement12)),
 	        React.createElement('input', { type: 'submit', value: 'Update', className: 'form-control btn btn-warning' })
 	      )
 	    );
@@ -36428,6 +36423,236 @@
 /* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
+	module.exports = __webpack_require__(234);
+
+/***/ },
+/* 234 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule LinkedStateMixin
+	 * @typechecks static-only
+	 */
+
+	'use strict';
+
+	var ReactLink = __webpack_require__(235);
+	var ReactStateSetters = __webpack_require__(236);
+
+	/**
+	 * A simple mixin around ReactLink.forState().
+	 */
+	var LinkedStateMixin = {
+	  /**
+	   * Create a ReactLink that's linked to part of this component's state. The
+	   * ReactLink will have the current value of this.state[key] and will call
+	   * setState() when a change is requested.
+	   *
+	   * @param {string} key state key to update. Note: you may want to use keyOf()
+	   * if you're using Google Closure Compiler advanced mode.
+	   * @return {ReactLink} ReactLink instance linking to the state.
+	   */
+	  linkState: function (key) {
+	    return new ReactLink(this.state[key], ReactStateSetters.createStateKeySetter(this, key));
+	  }
+	};
+
+	module.exports = LinkedStateMixin;
+
+/***/ },
+/* 235 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule ReactLink
+	 * @typechecks static-only
+	 */
+
+	'use strict';
+
+	/**
+	 * ReactLink encapsulates a common pattern in which a component wants to modify
+	 * a prop received from its parent. ReactLink allows the parent to pass down a
+	 * value coupled with a callback that, when invoked, expresses an intent to
+	 * modify that value. For example:
+	 *
+	 * React.createClass({
+	 *   getInitialState: function() {
+	 *     return {value: ''};
+	 *   },
+	 *   render: function() {
+	 *     var valueLink = new ReactLink(this.state.value, this._handleValueChange);
+	 *     return <input valueLink={valueLink} />;
+	 *   },
+	 *   _handleValueChange: function(newValue) {
+	 *     this.setState({value: newValue});
+	 *   }
+	 * });
+	 *
+	 * We have provided some sugary mixins to make the creation and
+	 * consumption of ReactLink easier; see LinkedValueUtils and LinkedStateMixin.
+	 */
+
+	var React = __webpack_require__(11);
+
+	/**
+	 * @param {*} value current value of the link
+	 * @param {function} requestChange callback to request a change
+	 */
+	function ReactLink(value, requestChange) {
+	  this.value = value;
+	  this.requestChange = requestChange;
+	}
+
+	/**
+	 * Creates a PropType that enforces the ReactLink API and optionally checks the
+	 * type of the value being passed inside the link. Example:
+	 *
+	 * MyComponent.propTypes = {
+	 *   tabIndexLink: ReactLink.PropTypes.link(React.PropTypes.number)
+	 * }
+	 */
+	function createLinkTypeChecker(linkType) {
+	  var shapes = {
+	    value: typeof linkType === 'undefined' ? React.PropTypes.any.isRequired : linkType.isRequired,
+	    requestChange: React.PropTypes.func.isRequired
+	  };
+	  return React.PropTypes.shape(shapes);
+	}
+
+	ReactLink.PropTypes = {
+	  link: createLinkTypeChecker
+	};
+
+	module.exports = ReactLink;
+
+/***/ },
+/* 236 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule ReactStateSetters
+	 */
+
+	'use strict';
+
+	var ReactStateSetters = {
+	  /**
+	   * Returns a function that calls the provided function, and uses the result
+	   * of that to set the component's state.
+	   *
+	   * @param {ReactCompositeComponent} component
+	   * @param {function} funcReturningState Returned callback uses this to
+	   *                                      determine how to update state.
+	   * @return {function} callback that when invoked uses funcReturningState to
+	   *                    determined the object literal to setState.
+	   */
+	  createStateSetter: function (component, funcReturningState) {
+	    return function (a, b, c, d, e, f) {
+	      var partialState = funcReturningState.call(component, a, b, c, d, e, f);
+	      if (partialState) {
+	        component.setState(partialState);
+	      }
+	    };
+	  },
+
+	  /**
+	   * Returns a single-argument callback that can be used to update a single
+	   * key in the component's state.
+	   *
+	   * Note: this is memoized function, which makes it inexpensive to call.
+	   *
+	   * @param {ReactCompositeComponent} component
+	   * @param {string} key The key in the state that you should update.
+	   * @return {function} callback of 1 argument which calls setState() with
+	   *                    the provided keyName and callback argument.
+	   */
+	  createStateKeySetter: function (component, key) {
+	    // Memoize the setters.
+	    var cache = component.__keySetters || (component.__keySetters = {});
+	    return cache[key] || (cache[key] = createStateKeySetter(component, key));
+	  }
+	};
+
+	function createStateKeySetter(component, key) {
+	  // Partial state is allocated outside of the function closure so it can be
+	  // reused with every call, avoiding memory allocation when this function
+	  // is called.
+	  var partialState = {};
+	  return function stateKeySetter(value) {
+	    partialState[key] = value;
+	    component.setState(partialState);
+	  };
+	}
+
+	ReactStateSetters.Mixin = {
+	  /**
+	   * Returns a function that calls the provided function, and uses the result
+	   * of that to set the component's state.
+	   *
+	   * For example, these statements are equivalent:
+	   *
+	   *   this.setState({x: 1});
+	   *   this.createStateSetter(function(xValue) {
+	   *     return {x: xValue};
+	   *   })(1);
+	   *
+	   * @param {function} funcReturningState Returned callback uses this to
+	   *                                      determine how to update state.
+	   * @return {function} callback that when invoked uses funcReturningState to
+	   *                    determined the object literal to setState.
+	   */
+	  createStateSetter: function (funcReturningState) {
+	    return ReactStateSetters.createStateSetter(this, funcReturningState);
+	  },
+
+	  /**
+	   * Returns a single-argument callback that can be used to update a single
+	   * key in the component's state.
+	   *
+	   * For example, these statements are equivalent:
+	   *
+	   *   this.setState({x: 1});
+	   *   this.createStateKeySetter('x')(1);
+	   *
+	   * Note: this is memoized function, which makes it inexpensive to call.
+	   *
+	   * @param {string} key The key in the state that you should update.
+	   * @return {function} callback of 1 argument which calls setState() with
+	   *                    the provided keyName and callback argument.
+	   */
+	  createStateKeySetter: function (key) {
+	    return ReactStateSetters.createStateKeySetter(this, key);
+	  }
+	};
+
+	module.exports = ReactStateSetters;
+
+/***/ },
+/* 237 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 
 	var React = __webpack_require__(10);
@@ -36507,7 +36732,7 @@
 	});
 
 /***/ },
-/* 234 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
