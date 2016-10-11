@@ -40,30 +40,11 @@ module.exports.AddItemComp = React.createClass({
       }.bind(this)
     });
   },
+  //the following hChange... function is no longer required. Mixin stateLink is doing the task.
   handleChangeItemName(event) {
     //console.log("handleChangeItemName");
     this.setState({key: event.target.value});
   },
-  hChangeItemDescription(event) {
-    //console.log("handleChangeItemDescription");
-    this.setState({itemDescription: event.target.value});
-  },
-  hChangeItemCategory(event) {
-    this.setState({itemCategory: event.target.value});
-  },
-  hChangeItemName(event) {
-    this.setState({itemName: event.target.value});
-  },
-  hChangeMeasurement(event) {
-    this.setState({measurement: event.target.value});
-  },
-  hChangeMeasurementUnit(event) {
-    this.setState({measurementUnit: event.target.value});
-  },
-  hChangePrice(event) {
-    this.setState({price: event.target.value});
-  },
-
 
   getInitialState: function() {
     return {
@@ -166,23 +147,9 @@ module.exports.EditItemComp = React.createClass({
     this.getRecordFromServer();
   },
 
-  hChangeItemName(event) {
-    this.setState({key: event.target.value});
-  },
+  //the following hChange... function is no longer required. Mixin stateLink is doing the task.
   hChangeItemDescription(event) {
     this.setState({itemDescription: event.target.value});
-  },
-  hChangeItemCategory(event) {
-    this.setState({itemCategory: event.target.value});
-  },
-  hChangeMeasurement(event) {
-    this.setState({measurement: event.target.value});
-  },
-  hChangeMeasurementUnit(event) {
-    this.setState({measurementUnit: event.target.value});
-  },
-  hChangePrice(event) {
-    this.setState({price: event.target.value});
   },
 
   getInitialState: function() {

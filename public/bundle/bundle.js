@@ -25855,28 +25855,10 @@
 	      }.bind(this)
 	    });
 	  },
+	  //the following hChange... function is no longer required. Mixin stateLink is doing the task.
 	  handleChangeItemName: function handleChangeItemName(event) {
 	    //console.log("handleChangeItemName");
 	    this.setState({ key: event.target.value });
-	  },
-	  hChangeItemDescription: function hChangeItemDescription(event) {
-	    //console.log("handleChangeItemDescription");
-	    this.setState({ itemDescription: event.target.value });
-	  },
-	  hChangeItemCategory: function hChangeItemCategory(event) {
-	    this.setState({ itemCategory: event.target.value });
-	  },
-	  hChangeItemName: function hChangeItemName(event) {
-	    this.setState({ itemName: event.target.value });
-	  },
-	  hChangeMeasurement: function hChangeMeasurement(event) {
-	    this.setState({ measurement: event.target.value });
-	  },
-	  hChangeMeasurementUnit: function hChangeMeasurementUnit(event) {
-	    this.setState({ measurementUnit: event.target.value });
-	  },
-	  hChangePrice: function hChangePrice(event) {
-	    this.setState({ price: event.target.value });
 	  },
 
 
@@ -25983,23 +25965,9 @@
 	    this.getRecordFromServer();
 	  },
 
-	  hChangeItemName: function hChangeItemName(event) {
-	    this.setState({ key: event.target.value });
-	  },
+	  //the following hChange... function is no longer required. Mixin stateLink is doing the task.
 	  hChangeItemDescription: function hChangeItemDescription(event) {
 	    this.setState({ itemDescription: event.target.value });
-	  },
-	  hChangeItemCategory: function hChangeItemCategory(event) {
-	    this.setState({ itemCategory: event.target.value });
-	  },
-	  hChangeMeasurement: function hChangeMeasurement(event) {
-	    this.setState({ measurement: event.target.value });
-	  },
-	  hChangeMeasurementUnit: function hChangeMeasurementUnit(event) {
-	    this.setState({ measurementUnit: event.target.value });
-	  },
-	  hChangePrice: function hChangePrice(event) {
-	    this.setState({ price: event.target.value });
 	  },
 
 
